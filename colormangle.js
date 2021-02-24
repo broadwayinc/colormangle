@@ -1,8 +1,10 @@
-
 class ColorMangle {
     /**
-     * This is a library for converting various color format strings.
-     * Example: blue -> rgba(0, 0, 255, 1) -> #0000ff -> hsl(240, 100%, 50%)
+     * With ColorMangle you can:
+     * convert color string to various color formats.
+     * ex) blue -> rgba(0, 0, 255, 1) -> #0000ff -> hsl(240, 100%, 50%).
+     * Get ideal text color based on luminance ratio.
+     * Get brightness adjusted color.
      * @param {string} color - Any type of color string you want to convert. Can be html color name, rgb, hex, hsl
      */
     constructor(color = 'teal') {
@@ -156,13 +158,13 @@ class ColorMangle {
             "yellow": "#ffff00",
             "yellowgreen": "#9acd32"
         };
-        let format = this.colorType(color);
+        let format = this._colorType(color);
         this.type = format.type;
         this.color = format.color;
     }
 
     _extractRGBAHSLADigit(color_arg = this.color) {
-        const {type = this.type, color = this.color} = this.colorType(color_arg);
+        const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (type === 'hex')
             return null;
@@ -177,17 +179,7 @@ class ColorMangle {
         return value;
     }
 
-    /**
-     * @typedef {Object} colorType
-     * @property {string} color - Color string (HTML color name will output as hex color)
-     * @property {"hex" | "rgb" | "rgba" | "hsl" | "hsla"} type - Type of the color string
-     */
-
-    /**
-     * Returns color type.
-     * @return {colorType}
-     */
-    colorType(color = this.color, throwErr = true) {
+    _colorType(color = this.color, throwErr = true) {
         let chkType, type;
 
         try {
@@ -243,13 +235,43 @@ class ColorMangle {
 
     /**
      * @typedef {Object} colorScheme
-     * @property {string} color - Color string (HTML color name will output as hex color)
-     * @property {"hex" | "rgb" | "rgba" | "hsl" | "hsla"} type - Type of the color string
+     * @property {string} --shadow - rgba(0, 0, 0, 0.05)
+     * @property {string} --light - rgba(255, 255, 255, 0.05)
+     * @property {string} --overlay - rgba(0, 0, 0, 0.25)
+     * @property {string} --alert - #ff6347
+     * @property {string} --background
+     * @property {string} --background-focus
+     * @property {string} --background-focus_transparent
+     * @property {string} --background-focus-text
+     * @property {string} --background-text
+     * @property {string} --background-text_transparent
+     * @property {string} --background-placeholder
+     * @property {string} --content
+     * @property {string} --content-focus
+     * @property {string} --content-focus_transparent
+     * @property {string} --content-focus-text
+     * @property {string} --content-text
+     * @property {string} --content-text_transparent
+     * @property {string} --content-placeholder
+     * @property {string} --toolbar
+     * @property {string} --toolbar-focus
+     * @property {string} --toolbar-focus_transparent
+     * @property {string} --toolbar-focus-text
+     * @property {string} --toolbar-text
+     * @property {string} --toolbar-text_transparent
+     * @property {string} --toolbar-placeholder
+     * @property {string} --button
+     * @property {string} --button-focus
+     * @property {string} --button-focus_transparent
+     * @property {string} --button-focus-text
+     * @property {string} --button-text
+     * @property {string} --button-text_transparent
+     * @property {string} --button-placeholder
      */
-
     /**
-     * Generates the color scheme.
-     * @return {colorType}
+     * Generates color scheme object.
+     * More info on next update.
+     * @return {colorScheme}
      */
     colorScheme(color = this.color) {
         let opacity = {
@@ -282,7 +304,7 @@ class ColorMangle {
             '--overlay': 'rgba(0, 0, 0, 0.25)'
         };
 
-        let focusDefault = this.colorType(color).color;
+        let focusDefault = this._colorType(color).color;
 
         let variableList = (() => {
             let list = [];
@@ -312,8 +334,12 @@ class ColorMangle {
                     } else {
                         if (scheme[m + '-text'])
                             scheme[m] = this.textColor({black: opacity.black}, scheme[m + '-text']);
-                        else
-                            scheme[m] = this.textColor();
+                        else {
+                            let t = this.textColor();
+                            if (target === 'background')
+                                t = this.adjustBrightness(4 * (t === '#ffffff' ? -1 : 1), t);
+                            scheme[m] = t;
+                        }
                     }
                 } else {
                     if (target === 'focus') {
@@ -364,6 +390,10 @@ class ColorMangle {
         return Object.assign(fixedValue, scheme);
     }
 
+    /**
+     * Returns luminance value of color
+     * @return {number}
+     */
     luminance(color = this.color) {
         let rgb = this.rgba(1, color);
 
@@ -377,6 +407,11 @@ class ColorMangle {
         return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
     }
 
+    /**
+     * Returns luminance ratio between the given color. Useful to determine if the given color is suitable for text with the constructed color as a background.
+     * @param {string} color - Color string you want to compare luminance ratio.
+     * @return {number}
+     */
     luminanceRatio(color) {
         let lum1 = this.luminance(this.color) + 0.05;
         let lum2 = this.luminance(color) + 0.05;
@@ -384,6 +419,13 @@ class ColorMangle {
         return lum1 > lum2 ? lum1 / lum2 : lum2 / lum1;
     }
 
+    /**
+     * Returns suitable text color (Black / White).
+     * @param {number | {}} opacity - Can set returning color values opacity.
+     * @param {number} opacity.black - Set returning color values opacity when the result color is black.
+     * @param {number} opacity.white - Set returning color values opacity when the result color is white.
+     * @return {number}
+     */
     textColor(opacity = 1, color = this.color) {
         let blackOpacity, whiteOpacity;
 
@@ -410,27 +452,34 @@ class ColorMangle {
             } else return 1;
         };
 
-        if (this.isHighLuminance(this.colorType(color).color))
+        if (this.isHighLuminance(this._colorType(color).color))
             return blackOpacity ? `rgba(0, 0, 0, ${opa(blackOpacity)})` : '#000000';
 
         return whiteOpacity ? `rgba(255, 255, 255, ${opa(whiteOpacity)})` : '#ffffff';
     }
 
-    isHighLuminance(color = this.color) {
-        const {r, g, b} = this.rgba(1, this.colorType(color).color);
+    /**
+     * Check if the color has high luminance.
+     * @return {boolean}
+     */
+    isHighLuminance(color = this.color, fineTuned = true) {
+        const {r, g, b} = this.rgba(1, this._colorType(color).color);
 
-        /**
-         * // Standard color space formula //
-         * const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-         */
-        let yiq = ((r * (299 - 128)) + (g * (587 + 64)) + (b * (114 + 64))) / 1000; // Fine tuned
+        let yiq =
+            fineTuned ?
+                ((r * (299 - 128)) + (g * (587 + 64)) + (b * (114 + 64))) / 1000 : // Fine tuned
+                ((r * 299) + (g * 587) + (b * 114)) / 1000; // Standard color space formula
 
-        // note: color space threshold fine tuned to 142 (Web standard is 128)
-        return (yiq >= 142);
+        // Web standard of color space threshold is 128
+        return (yiq >= (fineTuned ? 142 : 128));
     }
 
+    /**
+     * Returns hsla color
+     * @return {object}
+     */
     hsla(opacity = 1, color_arg = this.color) {
-        const {type = this.type, color = this.color} = this.colorType(color_arg);
+        const {type = this.type, color = this.color} = this._colorType(color_arg);
         const hsl = (r, g, b) => {
             r /= 255;
             g /= 255;
@@ -517,8 +566,12 @@ class ColorMangle {
         }
     }
 
+    /**
+     * Returns hex color string
+     * @return {string}
+     */
     hex(color_arg = this.color) {
-        const {type = this.type, color = this.color} = this.colorType(color_arg);
+        const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (type.includes('rgb') || type.includes('hsl')) {
             const opacity = this._extractRGBAHSLADigit(color)[3] || 1;
@@ -529,8 +582,12 @@ class ColorMangle {
         return color;
     }
 
+    /**
+     * Returns rgba color
+     * @return {object}
+     */
     rgba(opacity = 1, color_arg = this.color) {
-        const {type = this.type, color = this.color} = this.colorType(color_arg);
+        const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (type === 'hex') {
             const hex = color;
@@ -626,8 +683,13 @@ class ColorMangle {
         }
     }
 
+    /**
+     * Returns brightness adjusted color string
+     * @param {number} light - Adjust value. Darker when minus.
+     * @return {string}
+     */
     adjustBrightness(light = 0, color_arg = this.color) {
-        const {type = this.type, color = this.color} = this.colorType(color_arg);
+        const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (light === 0)
             return color;
