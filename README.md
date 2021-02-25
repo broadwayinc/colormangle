@@ -20,12 +20,11 @@ cm.hsla();
 // returns { h:240, s:100, l:50, r:0, g:0, b:255, a:1, string: 'hsla(240, 100, 50, 1)' }
 ```
 
-#API
+# API
 
 ### new ColorMangle(<string: color string>)
 Argument color string can be any type of color string format. Including css color names.
 
-**Example**
 `
 new ColorMangle('rgb(0, 0, 255)');
 `
@@ -35,7 +34,7 @@ new ColorMangle('rgb(0, 0, 255)');
 
 Converts color to hex color string.
 
-**Example** `new ColorMangle('blue').hex() // returns '#0000ff'`
+`new ColorMangle('blue').hex() // returns '#0000ff'`
 
 ### .rgba(<number = 1: opacity>)
 ```
@@ -50,7 +49,6 @@ return <object: {
 Converts color to rgba format.
 The argument 'opacity' is to set the opacity of the rgba output. (default = 1)
 
-**Example**
 ```
 new ColorMangle('#0000ff').rgba(0.5).string // returns "rgba(0, 0, 255, 0.5)"
 ```
@@ -71,7 +69,6 @@ return <object: {
 Converts color to hsla format.
 The argument 'opacity' is to set the opacity of the hsla output. (default = 1)
 
-**Example**
 ```
 new ColorMangle('#0000ff').hsla(0.5).string // returns "hsla(0, 0, 255, 0.5)"
 ```
@@ -82,8 +79,6 @@ return <string: color string>
 ```
 Outputs contrast color (Black | White) to use as text color.
 
-**Example**
-
 ```
 new ColorMangle('blue').textColor();
 // returns '#ffffff' #ffffff(White) can be used as text color on blue background
@@ -91,27 +86,27 @@ new ColorMangle('blue').textColor();
 
 Opacity of the output color can be set by argument. (default = 1)
 
-**Example**
+Example1:
 
 `new ColorMangle('blue').textColor(0.5) // returns 'rgba(255, 255, 255, 0.5)'`
 
 When the given argument is an object, you can set the opacity on each color cases.
 
-**Example**
+Example2:
 
 ```
 new ColorMangle('blue').textColor({white: 0.5});
 // returns 'rgba(255, 255, 255, 0.5)'
 ```
 
-**Example**
+Example3:
 
 ```
 new ColorMangle('blue').textColor({black: 0.5});
 // returns '#ffffff'
 ```
 
-**Example**
+Example4:
 
 ```
 new ColorMangle('antiquewhite').textColor({white: 0.5, black: 0.88});
