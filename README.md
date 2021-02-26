@@ -1,4 +1,4 @@
-# colormangle.js
+# colormangle.js YO
 JS library that converts color strings to various format.
 
 Add script in your `<head></head>`
