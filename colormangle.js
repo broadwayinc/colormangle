@@ -1,4 +1,5 @@
-class ColorMangle {
+/** To test on local browser, remove export */
+export class ColorMangle {
     /**
      * With ColorMangle you can:
      * convert color string to various color formats.
