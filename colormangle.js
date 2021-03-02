@@ -1,4 +1,4 @@
-/** To test on local browser, remove export */
+// To test on local browser, remove export
 export class ColorMangle {
     /**
      * With ColorMangle you can:
