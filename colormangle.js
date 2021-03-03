@@ -242,6 +242,7 @@ export class ColorMangle {
      * @property {string} --alert - #ff6347
      * @property {string} --background
      * @property {string} --background-focus
+     * @property {string} --background-focus_faded
      * @property {string} --background-focus_transparent
      * @property {string} --background-focus-text
      * @property {string} --background-text
@@ -249,6 +250,7 @@ export class ColorMangle {
      * @property {string} --background-placeholder
      * @property {string} --content
      * @property {string} --content-focus
+     * @property {string} --content-focus_faded
      * @property {string} --content-focus_transparent
      * @property {string} --content-focus-text
      * @property {string} --content-text
@@ -256,6 +258,7 @@ export class ColorMangle {
      * @property {string} --content-placeholder
      * @property {string} --toolbar
      * @property {string} --toolbar-focus
+     * @property {string} --toolbar-focus_faded
      * @property {string} --toolbar-focus_transparent
      * @property {string} --toolbar-focus-text
      * @property {string} --toolbar-text
@@ -263,6 +266,7 @@ export class ColorMangle {
      * @property {string} --toolbar-placeholder
      * @property {string} --button
      * @property {string} --button-focus
+     * @property {string} --button-focus_faded
      * @property {string} --button-focus_transparent
      * @property {string} --button-focus-text
      * @property {string} --button-text
