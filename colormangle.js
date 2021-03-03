@@ -278,7 +278,7 @@ export class ColorMangle {
         let opacity = {
             placeholder: 0.44,
             transparent: 0.11,
-            black: 0.88
+            faded: 0.88
         };
 
         let background = [
@@ -291,6 +291,7 @@ export class ColorMangle {
         let attribute = [
             '',
             '-focus',
+            '-focus_faded',
             '-focus_transparent',
             '-focus-text',
             '-text',
@@ -334,7 +335,7 @@ export class ColorMangle {
                             scheme[m] = focusDefault;
                     } else {
                         if (scheme[m + '-text'])
-                            scheme[m] = this.textColor({black: opacity.black}, scheme[m + '-text']);
+                            scheme[m] = this.textColor({black: opacity.faded}, scheme[m + '-text']);
                         else {
                             let t = this.textColor();
                             if (target === 'background')
@@ -354,15 +355,21 @@ export class ColorMangle {
                         let bk_key = m.replace('-' + target, '');
                         if (scheme[bk_key])
                             scheme[m] =
-                                this.textColor(bk_key.includes('button') ? null : {black: target === 'placeholder' ? opacity.placeholder : opacity.black}, scheme[bk_key]);
+                                this.textColor(bk_key.includes('button') ? null : {black: target === 'placeholder' ? opacity.placeholder : opacity.faded}, scheme[bk_key]);
                         else
-                            scheme[m] = `rgba(0, 0, 0, ${opacity.black})`;
+                            scheme[m] = `rgba(0, 0, 0, ${opacity.faded})`;
                     } else if (target.includes('transparent')) {
                         let t_key = m.replace('_transparent', '');
                         if (scheme[t_key])
                             scheme[m] = this.rgba(opacity.transparent, scheme[t_key]).string;
                         else
                             scheme[m] = `rgba(0, 0, 0, ${opacity.transparent})`;
+                    } else if (target.includes('faded')) {
+                        let t_key = m.replace('_faded', '');
+                        if (scheme[t_key])
+                            scheme[m] = this.rgba(opacity.faded, scheme[t_key]).string;
+                        else
+                            scheme[m] = `rgba(0, 0, 0, ${opacity.faded})`;
                     }
                 }
             }
