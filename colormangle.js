@@ -372,7 +372,7 @@ export class ColorMangle {
                     } else if (target.includes('faded')) {
                         let t_key = m.replace('_faded', '');
                         if (scheme[t_key])
-                            scheme[m] = this.rgba(opacity.faded, scheme[t_key]).string;
+                            scheme[m] = this.adjustBrightness(15, scheme[t_key]);
                         else
                             scheme[m] = `rgba(0, 0, 0, ${opacity.black})`;
                     }
