@@ -282,7 +282,8 @@ export class ColorMangle {
         let opacity = {
             placeholder: 0.44,
             transparent: 0.11,
-            faded: 0.88
+            faded: 0.92,
+            black: 0.8
         };
 
         let background = [
@@ -339,7 +340,7 @@ export class ColorMangle {
                             scheme[m] = focusDefault;
                     } else {
                         if (scheme[m + '-text'])
-                            scheme[m] = this.textColor({black: opacity.faded}, scheme[m + '-text']);
+                            scheme[m] = this.textColor({black: opacity.black}, scheme[m + '-text']);
                         else {
                             let t = this.textColor();
                             if (target === 'background')
@@ -359,9 +360,9 @@ export class ColorMangle {
                         let bk_key = m.replace('-' + target, '');
                         if (scheme[bk_key])
                             scheme[m] =
-                                this.textColor(bk_key.includes('button') ? null : {black: target === 'placeholder' ? opacity.placeholder : opacity.faded}, scheme[bk_key]);
+                                this.textColor(bk_key.includes('button') ? null : {black: target === 'placeholder' ? opacity.placeholder : opacity.black}, scheme[bk_key]);
                         else
-                            scheme[m] = `rgba(0, 0, 0, ${opacity.faded})`;
+                            scheme[m] = `rgba(0, 0, 0, ${opacity.black})`;
                     } else if (target.includes('transparent')) {
                         let t_key = m.replace('_transparent', '');
                         if (scheme[t_key])
@@ -373,7 +374,7 @@ export class ColorMangle {
                         if (scheme[t_key])
                             scheme[m] = this.rgba(opacity.faded, scheme[t_key]).string;
                         else
-                            scheme[m] = `rgba(0, 0, 0, ${opacity.faded})`;
+                            scheme[m] = `rgba(0, 0, 0, ${opacity.black})`;
                     }
                 }
             }
