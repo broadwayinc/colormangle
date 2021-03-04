@@ -1,5 +1,5 @@
 # colormangle.js
-JS library that converts color strings to various format
+JS library that converts color strings to various format djay ssss
 
 Add script in your `<head></head>`
 ```
