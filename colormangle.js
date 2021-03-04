@@ -291,8 +291,7 @@ export class ColorMangle {
             '--background',
             '--content',
             '--toolbar',
-            '--button',
-            '--alert'
+            '--button'
         ];
 
         let attribute = [
