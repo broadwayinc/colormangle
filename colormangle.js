@@ -369,7 +369,9 @@ export class ColorMangle {
                         let bk_key = m.replace('-' + target, '');
                         if (scheme[bk_key])
                             scheme[m] =
-                                this.textColor(bk_key.includes('button') ? null : (target === 'placeholder' ? opacity.placeholder : opacity.text), scheme[bk_key]);
+                                this.textColor(
+                                    bk_key.includes('button') ?
+                                        null : opacity[target], scheme[bk_key]);
                         else
                             scheme[m] = `#808080`;
                     } else if (target.includes('faded')) {
@@ -462,7 +464,7 @@ export class ColorMangle {
         } else if (opacity && typeof opacity === 'object') {
             for (let k of ['black', 'white']) {
                 let opa = opacity[k];
-                if (typeof opa === 'number') {
+                if (typeof opa === 'number' && opa < 1) {
                     if (k === 'black')
                         blackOpacity = opa;
                     else if (k === 'white')
