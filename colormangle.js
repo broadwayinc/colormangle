@@ -317,7 +317,7 @@ export class ColorMangle {
         };
 
         for (let l of ['transparent', 'soft', 'shadow']) {
-            fixedValue['--alert-' + l] = this.rgba(opacity[l].white, fixedValue['--alert']).string;
+            fixedValue['--alert-' + l] = this.rgba(opacity[l].black, fixedValue['--alert']).string;
         }
 
         let focusDefault = this._colorType(color).color;
@@ -384,7 +384,7 @@ export class ColorMangle {
                                 let t_key = m.replace('_' + l, '');
                                 if (scheme[t_key]) {
                                     let t = this.textColor(null, scheme[t_key]);
-                                    scheme[m] = this.rgba(t === '#ffffff' ? opacity[l].white : opacity[l].black, scheme[t_key]).string;
+                                    scheme[m] = this.rgba(t === '#ffffff' ? opacity[l].black : opacity[l].white, scheme[t_key]).string;
                                 } else
                                     scheme[m] = `#808080`;
                             }
