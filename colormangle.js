@@ -292,6 +292,7 @@ export class ColorMangle {
             '--content',
             '--toolbar',
             '--button',
+            '--alert'
         ];
 
         let attribute = [
@@ -303,18 +304,22 @@ export class ColorMangle {
             '-focus_transparent',
             '-focus-text',
             '-text',
-            '-text-soft',
-            '-text-shadow',
+            '-text_soft',
+            '-text_shadow',
             '-text_transparent',
             '-placeholder'
         ];
 
         let fixedValue = {
             '--shadow': 'rgba(0, 0, 0, 0.05)',
-            '--light': 'rgba(255, 255, 255, 0.05)',
+            '--light': 'rgba(255, 255, 255, 0.15)',
             '--alert': this.colorName.tomato,
             '--overlay': 'rgba(0, 0, 0, 0.25)'
         };
+
+        for (let l of ['transparent', 'soft', 'shadow']) {
+            fixedValue['--alert-' + l] = this.rgba(opacity[l].white, fixedValue['--alert']).string;
+        }
 
         let focusDefault = this._colorType(color).color;
 
