@@ -315,6 +315,7 @@ export class ColorMangle {
 
         let fixedValue = {
             '--shadow': 'rgba(0, 0, 0, 0.05)',
+            '--shade': 'rgba(0, 0, 0, 0.15)',
             '--light': 'rgba(255, 255, 255, 0.15)',
             '--alert': this.colorName.tomato,
             '--overlay': 'rgba(0, 0, 0, 0.25)'
