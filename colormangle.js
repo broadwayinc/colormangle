@@ -303,7 +303,7 @@ export class ColorMangle {
             '-focus_soft',
             '-focus_shadow',
             '-focus_transparent',
-            '-focus-screen',
+            '-focus_screen',
             '-focus-text',
             '-text',
             '-text_soft',
