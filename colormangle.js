@@ -281,7 +281,7 @@ export class ColorMangle {
     colorScheme(color = this.color) {
         let opacity = {
             text: {black: 0.88, white: 1},
-            faded: {black: -8, white: 14},
+            faded: {black: 14, white: 14},
             soft: {black: 0.66, white: 0.88},
             placeholder: {black: 0.33, white: 0.66},
             transparent: {black: 0.11, white: 0.33},
