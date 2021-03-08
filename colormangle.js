@@ -346,6 +346,11 @@ export class ColorMangle {
                 let target = splitKey[splitKey.length - 1];
 
                 if (splitKey.length === 3) {
+                    // '--background',
+                    // '--content',
+                    // '--toolbar',
+                    // '--button'
+
                     if (target === 'button') {
                         if (focusColorKey.length)
                             scheme[m] = scheme[focusColorKey[focusColorKey.length - 1]];
@@ -357,10 +362,10 @@ export class ColorMangle {
                         else {
                             let t = this.textColor();
 
-                            if (target === 'content' && scheme['--background'] && this.isHighLuminance(scheme['--background']))
-                                t = this.adjustBrightness(14, t);
-                            else if (target === 'background' && t === '#ffffff')
+                            if (target === 'background' && t === '#ffffff')
                                 t = this.adjustBrightness(-4, t);
+                            else if (target === 'content' && scheme['--background'] && !this.isHighLuminance(scheme['--background']))
+                                t = this.adjustBrightness(14, scheme['--background']);
 
                             scheme[m] = t;
                         }
@@ -376,7 +381,7 @@ export class ColorMangle {
                     } else if (target === 'text' || target === 'placeholder') {
                         let bk_key = m.replace('-' + target, '');
                         if (scheme[bk_key])
-                            scheme[m] = this.textColor(scheme[bk_key]);
+                            scheme[m] = this.textColor(opacity[target], scheme[bk_key]);
                         else
                             scheme[m] = `#808080`;
                     } else if (target.includes('faded')) {
