@@ -309,7 +309,7 @@ export class ColorMangle {
             '-text_soft',
             '-text_shadow',
             '-text_transparent',
-            '-text-screen',
+            '-text_screen',
             '-placeholder'
         ];
 
