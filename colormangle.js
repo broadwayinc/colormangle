@@ -280,11 +280,13 @@ export class ColorMangle {
      */
     colorScheme(color = this.color) {
         let opacity = {
-            text: {black: 0.8, white: 1},
+            text: {black: 0.88, white: 1},
+            faded: {black: -8, white: 14},
             soft: {black: 0.66, white: 0.88},
             placeholder: {black: 0.33, white: 0.66},
             transparent: {black: 0.11, white: 0.33},
-            shadow: {black: 0.05, white: 0.15},
+            shadow: {black: 0.066, white: 0.11},
+            screen: {black: 0.033, white: 0.066}
         };
 
         let background = [
@@ -301,11 +303,13 @@ export class ColorMangle {
             '-focus_soft',
             '-focus_shadow',
             '-focus_transparent',
+            '-focus-screen',
             '-focus-text',
             '-text',
             '-text_soft',
             '-text_shadow',
             '-text_transparent',
+            '-text-screen',
             '-placeholder'
         ];
 
@@ -352,8 +356,12 @@ export class ColorMangle {
                             scheme[m] = this.textColor(opacity.text, scheme[m + '-text']);
                         else {
                             let t = this.textColor();
-                            if (target === 'background')
-                                t = this.adjustBrightness(4 * (t === '#ffffff' ? -1 : 1), t);
+
+                            if (target === 'content' && scheme['--background'] && this.isHighLuminance(scheme['--background']))
+                                t = this.adjustBrightness(14, t);
+                            else if (target === 'background' && t === '#ffffff')
+                                t = this.adjustBrightness(-4, t);
+
                             scheme[m] = t;
                         }
                     }
@@ -368,26 +376,22 @@ export class ColorMangle {
                     } else if (target === 'text' || target === 'placeholder') {
                         let bk_key = m.replace('-' + target, '');
                         if (scheme[bk_key])
-                            scheme[m] =
-                                this.textColor(
-                                    bk_key.includes('button') ?
-                                        null : opacity[target], scheme[bk_key]);
+                            scheme[m] = this.textColor(scheme[bk_key]);
                         else
                             scheme[m] = `#808080`;
                     } else if (target.includes('faded')) {
                         let t_key = m.replace('_faded', '');
                         if (scheme[t_key])
-                            scheme[m] = this.adjustBrightness(14, scheme[t_key]);
+                            scheme[m] = this.adjustBrightness(this.isHighLuminance(scheme[t_key]) ? opacity.faded.black : opacity.faded.white, scheme[t_key]);
                         else
                             scheme[m] = `#808080`;
                     } else {
-                        for (let l of ['transparent', 'soft', 'shadow']) {
+                        for (let l of ['transparent', 'soft', 'shadow', 'screen']) {
                             if (target.includes(l)) {
                                 let t_key = m.replace('_' + l, '');
-                                if (scheme[t_key]) {
-                                    let t = this.textColor(null, scheme[t_key]);
-                                    scheme[m] = this.rgba(t === '#ffffff' ? opacity[l].black : opacity[l].white, scheme[t_key]).string;
-                                } else
+                                if (scheme[t_key])
+                                    scheme[m] = this.rgba(this.isHighLuminance(scheme[t_key]) ? opacity[l].white : opacity[l].black, scheme[t_key]).string;
+                                else
                                     scheme[m] = `#808080`;
                             }
                         }
