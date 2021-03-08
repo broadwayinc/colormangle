@@ -321,7 +321,7 @@ export class ColorMangle {
             '--overlay': 'rgba(0, 0, 0, 0.25)'
         };
 
-        for (let l of ['transparent', 'soft', 'shadow']) {
+        for (let l of ['transparent', 'soft', 'shadow', 'screen']) {
             fixedValue['--alert-' + l] = this.rgba(opacity[l].black, fixedValue['--alert']).string;
         }
 
