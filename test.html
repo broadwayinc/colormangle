@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://s3.amazonaws.com/broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>
+</head>
+<body>
+<div id="test1"></div>
+<div id="test2"></div>
+</body>
+<script>
+    let color1 = '#00807f';
+    let cm = new ColorMangle(color1);
+
+    let test1 = document.getElementById('test1');
+    let test2 = document.getElementById('test2');
+
+    test1.innerText = color1; // insert text in a box
+    test1.style.color = cm.textColor(); // text color
+    test1.style.backgroundColor = color1; // background color
+
+    let color2 = cm.rgba();
+
+    console.log(color2);
+
+    test2.innerText = color2.string;
+    test2.style.color = color2.string;
+    test2.style.backgroundColor = 'rgba(0,0,0,0.1)';
+</script>
+</html>
