@@ -41,14 +41,6 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 
 ```
 new ColorMangle('blue').hex() // returns '#0000ff'` 
- 
-
-
-cm.rgba();
-// returns { r:0, g:0, b:255, a:1, string: 'rgba(0, 0, 255, 1)' }
-
-cm.hsla();
-// returns { h:240, s:100, l:50, r:0, g:0, b:255, a:1, string: 'hsla(240, 100%, 50%, 1)' }
 ```
 
 
