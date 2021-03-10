@@ -2,13 +2,14 @@
 
 # ColorMangle
 
-A user-friendly text and background color selector for UI design. **ColorMangle** converts color strings to various format. 
-
-
+An user-friendly text and background color selector for UI design. **ColorMangle** converts color strings to various format. 
+<br />
 
 ## Getting started
+<br />
 
 ### Requirements/Installation
+<br />
 
 
 
@@ -37,7 +38,7 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 
 **.hex()** converts any color format string to **hex** type string. It doesn't require any input argument.
 
-**<u>Example</u>**
+**_Example_**
 
 ```
 new ColorMangle('blue').hex() // returns '#0000ff'` 
@@ -59,7 +60,7 @@ new ColorMangle('blue').hex() // returns '#0000ff'`
 }
 ```
 
-**<u>Example</u>**
+**_Example_**
 
 ```
 let cm1 = new ColorMangle('blue').rgba(); 
@@ -86,7 +87,7 @@ let cm2 = new ColorMangle('blue').rgba(0.5).string
     string: 'text value in hsla format'
 }
 ```
-**<u>Example</u>**
+**_Example_**
 
 ```
 let cm1 = new ColorMangle('blue').hsla(); 
@@ -109,7 +110,7 @@ let cm2 = new ColorMangle('blue').hsla(0.3).string;
 
 **.textColor()** automatically returns the text color string (either 'white' or 'black') that shows the greatest contrast with the background color. **Opacity** of the output text color (either 'black' or 'white') can be set by **input argument**. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
 
-**<u>Example</u>**
+**_Example_**
 
 ```
 new ColorMangle('blue').textColor();
@@ -120,9 +121,9 @@ new ColorMangle('blue').textColor(0.7)
 // returns rgba format text color when the input argument is given between 0~1, 'rgba(255, 255, 255, 0.7)'
 ```
 
-Also, opacity on each color cases can be defined by using object input argument as follows.
+Also, opacity on each color cases can be pre-defined by using object input argument as follows.
 
-**<u>Example</u>**
+**_Example_**
 
 ```
 new ColorMangle('blue').textColor({white: 0.5});
@@ -132,7 +133,7 @@ new ColorMangle('blue').textColor({black: 0.5});
 // returns '#ffffff'(input argument not applied since the output text color is white on blue background)
 
 new ColorMangle('antiquewhite').textColor({white: 0.5, black: 0.88});
-// returns 'rgba(0, 0, 0, 0.88)' (The opacity is applied on each color cases without knowing which text color output is given)
+// returns 'rgba(0, 0, 0, 0.88)' (The opacity is applied on each color cases)
 ```
 
 
