@@ -1,8 +1,8 @@
 <img alt="APM" src="https://img.shields.io/apm/l/vim-mode"> <img alt="APM" src="https://img.shields.io/apm/dm/vim-mode">
 
-# colormangle
+# ColorMangle
 
-A user-friendly text and background color selector for UI design. **Colormangle** converts color strings to various format. 
+A user-friendly text and background color selector for UI design. **ColorMangle** converts color strings to various format. 
 
 
 
