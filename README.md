@@ -8,9 +8,8 @@ An user-friendly text and background color selector for UI design. **ColorMangle
 ## Getting started
 <br />
 
-### Requirements/Installation
+Requirements/Installation
 <br />
-
 
 
 ## Basic usage
@@ -20,20 +19,13 @@ An user-friendly text and background color selector for UI design. **ColorMangle
 **ColorMangle** input argument string can be either colorname string or any type of HTML color codes (hex, rgb, hsl).
 
 Colorname strings can be referred in this [link](https://www.w3schools.com/colors/colors_names.asp). Belows are all equivalent argument strings expressing 'blue'. 
-
-
-
 - ​	**Colorname:** 'blue'
 - ​	**Hex format:** '#0000ff' 
 - ​	**RGB format:** 'rgb(0, 0, 255)' 
 - ​	**HSL format:** 'hsl(240, 100%, 50%, 1)'
 
-
-
 **ColorMangle** have four main functions, which are **.hex()**, **.rgba()**, **.hsla()** and **.textcolor()**. The usages are shown below.
-
-
-
+<br/>
 ### .hex()
 
 **.hex()** converts any color format string to **hex** type string. It doesn't require any input argument.
@@ -45,7 +37,7 @@ new ColorMangle('blue').hex() // returns '#0000ff'`
 ```
 
 
-
+<br/>
 ### .rgba()
 
 **.rgba()** converts any css color format string to **rgba** format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque). **.rgba()** returns object properties (r, g, b, a, string and their values) as in the following structure.
@@ -70,7 +62,7 @@ let cm2 = new ColorMangle('blue').rgba(0.5).string
 // returns 'rgba(0, 0, 255, 0.5)'
 ```
 
-
+<br/>
 ### .hsla()
 
 **.hsla()** converts any css color format string to hsla format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque). **.hsla()** returns object properties (r, g, b, h, s, l, a, string and their values) as in the following structure.
@@ -103,9 +95,7 @@ let cm1 = new ColorMangle('blue').hsla();
 let cm2 = new ColorMangle('blue').hsla(0.3).string; 
 // returns 'hsla(240, 100, 50, 0.3)'
 ```
-
-
-
+<br/>
 ### .textColor()
 
 **.textColor()** automatically returns the text color string (either 'white' or 'black') that shows the greatest contrast with the background color. **Opacity** of the output text color (either 'black' or 'white') can be set by **input argument**. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
