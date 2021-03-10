@@ -25,6 +25,7 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 - ​	**HSL format:** 'hsl(240, 100%, 50%, 1)'
 
 **ColorMangle** have four main functions, which are **.hex()**, **.rgba()**, **.hsla()** and **.textcolor()**. The usages are shown below.
+
 <br />
 
 ### .hex()
@@ -104,7 +105,7 @@ let cm2 = new ColorMangle('blue').hsla(0.3).string;
 
 **.textColor()** automatically returns the text color string (either 'white' or 'black') that shows the greatest contrast with the background color. **Opacity** of the output text color (either 'black' or 'white') can be set by **input argument**. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
 
-**_Example_**
+**_Example 1_**
 
 ```
 new ColorMangle('blue').textColor();
@@ -117,7 +118,7 @@ new ColorMangle('blue').textColor(0.7)
 
 Also, opacity on each color cases can be pre-defined by using object input argument as follows.
 
-**_Example_**
+**_Example 2_**
 
 ```
 new ColorMangle('blue').textColor({white: 0.5});
