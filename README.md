@@ -16,6 +16,15 @@ let hex = colormangle.hex();
 console.log(hex); // '#0000ff'
 ```
 <br />
+On node.js or webpack based projects
+
+```
+npm i colormangle
+```
+And in your javascript:
+```
+import {ColorMangle} from 'colormangle';
+```
 
 ## Basic usage
 
@@ -109,6 +118,16 @@ new ColorMangle('blue').hsla(0.3).string
 ```
 <br />
 
+### .contrastRatio()
+**.contrastRatio()** calculates the contrast ratio between the given colors.
+
+**_Example_**
+```
+new ColorMangle('red').contrastRatio('white')
+// returns 3.9984767707539985 
+```
+<br />
+
 ### .textColor()
 
 **.textColor()** automatically returns the text color string (either 'white' or 'black') that shows the greatest contrast with the background color. **Opacity** of the output text color (either 'black' or 'white') can be set by **input argument**. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
@@ -117,7 +136,7 @@ new ColorMangle('blue').hsla(0.3).string
 
 ```
 new ColorMangle('blue').textColor()
-// returns hex format text color '#ffffff'. 
+// returns hex format text color '#ffffff' 
 // white (#ffffff)' is the recommended output text color to be used on blue background.
 
 new ColorMangle('blue').textColor(0.7) 
