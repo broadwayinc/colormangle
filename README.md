@@ -42,7 +42,8 @@ new ColorMangle('blue').hex() // returns '#0000ff'`
 
 ### .rgba()
 
-**.rgba()** converts any css color format string to **rgba** format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque). **.rgba()** returns object properties (r, g, b, a, string and their values) as in the following structure.
+**.rgba()** converts any css color format string to **rgba** format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
+<br />**.rgba()** returns object properties (r, g, b, a, string and their values) as in the following structure.
 
 ```
 {
