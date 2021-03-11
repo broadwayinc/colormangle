@@ -25,6 +25,7 @@ And in your javascript:
 ```
 import {ColorMangle} from 'colormangle';
 ```
+<br />
 
 ## Basic usage
 
