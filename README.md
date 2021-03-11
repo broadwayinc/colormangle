@@ -4,16 +4,18 @@
 **ColorMangle** converts color strings to various format,
 calculates appropriate text color based on contrast ratio. 
 <br />
-
 ## Getting started
-
 Add script tag in your header
 ```
 <script src="https://broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>
 ```
-
+And in your javascript:
+```
+let colormangle = new ColorMangle('blue');
+let hex = colormangle.hex();
+console.log(hex); // '#0000ff'
+```
 <br />
-
 
 ## Basic usage
 
@@ -41,7 +43,6 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 let hex = new ColorMangle('blue').hex()
 console.log(hex) // '#0000ff' 
 ```
-
 
 <br />
 
