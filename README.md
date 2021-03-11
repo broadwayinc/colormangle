@@ -1,4 +1,4 @@
-<img alt="APM" src="https://img.shields.io/apm/l/vim-mode"> [![Github All Releases](https://img.shields.io/github/downloads/broadwayinc/colormangle/total.svg)]()
+<img alt="APM" src="https://img.shields.io/apm/l/vim-mode">
 
 # ColorMangle
 **ColorMangle** converts color strings to various format,
