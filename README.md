@@ -2,18 +2,22 @@
 
 # ColorMangle
 
-An user-friendly text and background color selector for UI design. **ColorMangle** converts color strings to various format. 
+A user-friendly text and background color selector for UI design. **ColorMangle** converts color strings to various format. 
 <br />
 
 ## Getting started
 
+Add script tag in your header
+```
+<script src="https://broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>
+```
 
 <br />
 
 
 ## Basic usage
 
-### ColorMangle()
+### new ColorMangle()
 
 **ColorMangle** input argument string can be either colorname string or any type of HTML color codes (hex, rgb, hsl).
 
@@ -34,7 +38,8 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 **_Example_**
 
 ```
-new ColorMangle('blue').hex() // returns '#0000ff'` 
+let hex = new ColorMangle('blue').hex()
+console.log(hex) // '#0000ff' 
 ```
 
 
@@ -58,10 +63,10 @@ new ColorMangle('blue').hex() // returns '#0000ff'`
 **_Example_**
 
 ```
-let cm1 = new ColorMangle('blue').rgba(); 
+new ColorMangle('blue').rgba(); 
 // returns { r:0, g:0, b:255, a:1, string: 'rgba(0, 0, 255, 1)' }
 
-let cm2 = new ColorMangle('blue').rgba(0.5).string 
+new ColorMangle('blue').rgba(0.5).string 
 // returns 'rgba(0, 0, 255, 0.5)'
 ```
 
@@ -86,7 +91,7 @@ let cm2 = new ColorMangle('blue').rgba(0.5).string
 **_Example_**
 
 ```
-let cm1 = new ColorMangle('blue').hsla(); 
+new ColorMangle('blue').hsla()
 /*
 returns { r:0, 
 	  g:0, 
@@ -98,7 +103,7 @@ returns { r:0,
 	  string: 'hsla(240, 100, 50, 1)' }
 */
 
-let cm2 = new ColorMangle('blue').hsla(0.3).string; 
+new ColorMangle('blue').hsla(0.3).string
 // returns 'hsla(240, 100, 50, 0.3)'
 ```
 <br />
@@ -110,7 +115,7 @@ let cm2 = new ColorMangle('blue').hsla(0.3).string;
 **_Example 1_**
 
 ```
-new ColorMangle('blue').textColor();
+new ColorMangle('blue').textColor()
 // returns hex format text color '#ffffff'. 
 // white (#ffffff)' is the recommended output text color to be used on blue background.
 
@@ -123,17 +128,15 @@ Also, opacity on each color cases can be pre-defined by using object input argum
 **_Example 2_**
 
 ```
-new ColorMangle('blue').textColor({white: 0.5});
+new ColorMangle('blue').textColor({white: 0.5})
 // returns 'rgba(255, 255, 255, 0.5)'
 
-new ColorMangle('blue').textColor({black: 0.5});
+new ColorMangle('blue').textColor({black: 0.5})
 // returns '#ffffff'(input argument not applied since the output text color is white on blue background)
 
-new ColorMangle('antiquewhite').textColor({white: 0.5, black: 0.88});
+new ColorMangle('antiquewhite').textColor({white: 0.5, black: 0.88})
 // returns 'rgba(0, 0, 0, 0.88)' (The opacity is applied on each color cases)
 ```
-
-
 
 ## License
 
