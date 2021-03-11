@@ -6,9 +6,8 @@ An user-friendly text and background color selector for UI design. **ColorMangle
 <br />
 
 ## Getting started
-<br />
 
-Requirements/Installation
+
 <br />
 
 
@@ -135,18 +134,6 @@ new ColorMangle('antiquewhite').textColor({white: 0.5, black: 0.88});
 
 
 
-
-
-## Support
-
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-
-
-## Contributing
-
-
-
-
-
 ## License
+
+This project is licensed under the terms of the [MIT license](https://github.com/broadwayinc/colormangle/blob/main/LICENSE).
