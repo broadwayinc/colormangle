@@ -1,8 +1,8 @@
 <img alt="APM" src="https://img.shields.io/apm/l/vim-mode"> [![Github All Releases](https://img.shields.io/github/downloads/broadwayinc/colormangle/total.svg)]()
 
 # ColorMangle
-
-A user-friendly text and background color selector for UI design. **ColorMangle** converts color strings to various format. 
+**ColorMangle** converts color strings to various format,
+calculates appropriate text color based on contrast ratio. 
 <br />
 
 ## Getting started
