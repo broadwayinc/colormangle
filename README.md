@@ -27,7 +27,7 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 - ​	**Colorname:** 'blue'
 - ​	**Hex format:** '#0000ff' 
 - ​	**RGB format:** 'rgb(0, 0, 255)' 
-- ​	**HSL format:** 'hsl(240, 100%, 50%, 1)'
+- ​	**HSL format:** 'hsl(240, 100%, 50%)'
 
 **ColorMangle** have four main functions, which are **.hex()**, **.rgba()**, **.hsla()** and **.textcolor()**. The usages are shown below.
 
@@ -101,11 +101,11 @@ returns { r:0,
 	  s:100,
 	  l:50,
 	  a:1, 
-	  string: 'hsla(240, 100, 50, 1)' }
+	  string: 'hsla(240, 100%, 50%, 1)' }
 */
 
 new ColorMangle('blue').hsla(0.3).string
-// returns 'hsla(240, 100, 50, 0.3)'
+// returns 'hsla(240, 100%, 50%, 0.3)'
 ```
 <br />
 
