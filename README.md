@@ -87,14 +87,14 @@ let cm2 = new ColorMangle('blue').rgba(0.5).string
 
 ```
 let cm1 = new ColorMangle('blue').hsla(); 
-// returns { r:0, 
-			 g:0, 
-			 b:255, 
-			 h:240,
-			 s:100,
-			 l:50,
-			 a:1, 
-			 string: 'hsla(240, 100, 50, 1)' }
+// returns {    r:0, 
+		g:0, 
+		b:255, 
+		h:240,
+		s:100,
+		l:50,
+		a:1, 
+		string: 'hsla(240, 100, 50, 1)' }
 
 let cm2 = new ColorMangle('blue').hsla(0.3).string; 
 // returns 'hsla(240, 100, 50, 0.3)'
