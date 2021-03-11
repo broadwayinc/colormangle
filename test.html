@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>
+    <!--<script src="colormangle.js"></script>-->
     <title>colormangle.js</title>
 </head>
 <body>
@@ -13,6 +14,7 @@
     let color1 = '#00807f';
     let cm = new ColorMangle(color1);
 
+    console.log(cm.contrastRatio('#004abf'));
     let test1 = document.getElementById('test1');
     let test2 = document.getElementById('test2');
 

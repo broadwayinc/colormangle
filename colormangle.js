@@ -1,12 +1,8 @@
 // To test on local browser, remove export
 export class ColorMangle {
     /**
-     * With ColorMangle you can:
-     * convert color string to various color formats.
-     * ex) blue -> rgba(0, 0, 255, 1) -> #0000ff -> hsl(240, 100%, 50%).
-     * Get ideal text color based on luminance ratio.
-     * Get brightness adjusted color.
-     * @param {string} color - Any type of color string you want to convert. Can be html color name, rgb, hex, hsl
+     * An user-friendly text and background color selector for UI design. ColorMangle converts color strings to various format.
+     * @param {string} [color='teal'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
     constructor(color = 'teal') {
         this.colorName = {
@@ -275,7 +271,6 @@ export class ColorMangle {
      */
     /**
      * Generates color scheme object.
-     * More info on next update.
      * @return {colorScheme}
      */
     colorScheme(color = this.color) {
@@ -430,30 +425,43 @@ export class ColorMangle {
     }
 
     /**
-     * Returns luminance value of color
-     * @return {number}
+     * Check if the color has high luminance.
+     * @return {boolean}
      */
-    luminance(color = this.color) {
-        let rgb = this.rgba(1, color);
+    isHighLuminance(color_arg = this.color, fineTuned = true) {
+        const {r, g, b} = this.rgba(1, this._colorType(color_arg).color);
 
-        let a = [rgb.r, rgb.g, rgb.b].map(function (v) {
-            v /= 255;
-            return v <= 0.03928
-                ? v / 12.92
-                : Math.pow((v + 0.055) / 1.055, 2.4);
-        });
+        let yiq =
+            fineTuned ?
+                ((r * (299 - 128)) + (g * (587 + 64)) + (b * (114 + 64))) / 1000 : // Fine tuned
+                ((r * 299) + (g * 587) + (b * 114)) / 1000; // Standard color space formula
 
-        return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+        // Web standard of color space threshold is 128
+        return (yiq >= (fineTuned ? 142 : 128));
     }
 
     /**
-     * Returns luminance ratio between the given color. Useful to determine if the given color is suitable for text with the constructed color as a background.
-     * @param {string} color - Color string you want to compare luminance ratio.
+     * Returns contrast ratio between the given color.
+     * Useful to determine if the given color is suitable for text with the constructed color as a background.
+     * @param {string} color_arg - Color string you want to compare luminance ratio.
      * @return {number}
      */
-    luminanceRatio(color) {
-        let lum1 = this.luminance(this.color) + 0.05;
-        let lum2 = this.luminance(color) + 0.05;
+    contrastRatio(color_arg) {
+        let luminance = (c) => {
+            let rgb = this.rgba(1, c);
+
+            let a = [rgb.r, rgb.g, rgb.b].map(function (v) {
+                v /= 255;
+                return v <= 0.03928
+                    ? v / 12.92
+                    : Math.pow((v + 0.055) / 1.055, 2.4);
+            });
+
+            return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+        }
+
+        let lum1 = luminance(this.color) + 0.05;
+        let lum2 = luminance(color_arg) + 0.05;
 
         return lum1 > lum2 ? lum1 / lum2 : lum2 / lum1;
     }
@@ -465,7 +473,7 @@ export class ColorMangle {
      * @param {number} opacity.white - Set returning color values opacity when the result color is white.
      * @return {number}
      */
-    textColor(opacity = 1, color = this.color) {
+    textColor(opacity = 1, color_arg = this.color) {
         let blackOpacity, whiteOpacity;
 
         if (typeof opacity === 'number' && opacity < 1) {
@@ -491,30 +499,15 @@ export class ColorMangle {
             } else return 1;
         };
 
-        if (this.isHighLuminance(this._colorType(color).color))
+        if (this.isHighLuminance(this._colorType(color_arg).color))
             return blackOpacity ? `rgba(0, 0, 0, ${opa(blackOpacity)})` : '#000000';
 
         return whiteOpacity ? `rgba(255, 255, 255, ${opa(whiteOpacity)})` : '#ffffff';
     }
 
     /**
-     * Check if the color has high luminance.
-     * @return {boolean}
-     */
-    isHighLuminance(color = this.color, fineTuned = true) {
-        const {r, g, b} = this.rgba(1, this._colorType(color).color);
-
-        let yiq =
-            fineTuned ?
-                ((r * (299 - 128)) + (g * (587 + 64)) + (b * (114 + 64))) / 1000 : // Fine tuned
-                ((r * 299) + (g * 587) + (b * 114)) / 1000; // Standard color space formula
-
-        // Web standard of color space threshold is 128
-        return (yiq >= (fineTuned ? 142 : 128));
-    }
-
-    /**
      * Returns hsla color
+     * @param {number} opacity - Set opacity for returning color value.
      * @return {object}
      */
     hsla(opacity = 1, color_arg = this.color) {
@@ -623,6 +616,7 @@ export class ColorMangle {
 
     /**
      * Returns rgba color
+     * @param {number} opacity - Set opacity of returning color
      * @return {object}
      */
     rgba(opacity = 1, color_arg = this.color) {
