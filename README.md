@@ -11,7 +11,7 @@ Add script tag in your header
 ```
 And in your javascript:
 ```
-let colormangle = new ColorMangle('blue');
+let colormangle = new ColorMangle('rgb(0, 0, 255)');
 let hex = colormangle.hex();
 console.log(hex); // '#0000ff'
 ```
