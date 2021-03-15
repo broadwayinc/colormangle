@@ -1,6 +1,8 @@
 <img alt="APM" src="https://img.shields.io/apm/l/vim-mode">
 
 # ColorMangle
+
+[Getting Started](#getting-started) | [Basic usage](#basic-usage) | [License](#license)
 **ColorMangle** converts color strings to various format,
 calculates appropriate text color based on contrast ratio. 
 <br />
