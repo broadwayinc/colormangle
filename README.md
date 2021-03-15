@@ -4,8 +4,7 @@
 
 [Getting started](#getting-started) | [ColorMangle()](#new-ColorMangle) | [.hex()](#hex) | [.rgba()](#rgba) | [.hsla()](#hsla) | [.contrastRatio()](#contrastRatio) | [.textColor()](#textColor) | [License](#license) </br> 
 
-**ColorMangle** converts color strings to various format,
-calculates appropriate text color based on contrast ratio. 
+**ColorMangle** converts color strings to various format and calculates appropriate text color based on contrast ratio. 
 <br />
 ## Getting started
 Add script tag in your header
