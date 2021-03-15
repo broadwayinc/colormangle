@@ -2,7 +2,7 @@
 
 # ColorMangle <br />
 
-[ColorMangle](#new ColorMangle) | [hex](#hex) | [rgba](#rgba) | [hsla](#hsla) | [contrastRatio](#contrastRatio) | [textColor](#textColor) | [License](#license) </br> 
+[ColorMangle](#new ColorMangle()) | [hex](#hex) | [rgba](#rgba) | [hsla](#hsla) | [contrastRatio](#contrastRatio) | [textColor](#textColor) | [License](#license) </br> 
 
 **ColorMangle** converts color strings to various format,
 calculates appropriate text color based on contrast ratio. 
