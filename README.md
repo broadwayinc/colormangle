@@ -31,7 +31,7 @@ import {ColorMangle} from 'colormangle';
 
 ## Basic usage
 
-### new ColorMangle()
+### ColorMangle()
 
 **ColorMangle** input argument string can be either colorname string or any type of HTML color codes (hex, rgb, hsl).
 
