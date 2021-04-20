@@ -1,5 +1,5 @@
 // To test on local browser, remove export
-export class ColorMangle {
+/*export default */class ColorMangle {
     /**
      * An user-friendly text and background color selector for UI design. ColorMangle converts color strings to various format.
      * @param {string} [color='teal'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
@@ -624,24 +624,23 @@ export class ColorMangle {
 
         if (type === 'hex') {
             const hex = color;
-            let r, g, b;
-            if (hex.length === 4) {
-                r = '0x' + hex[1] + hex[1];
-                g = '0x' + hex[2] + hex[2];
-                b = '0x' + hex[3] + hex[3];
+            let rgbObject = {r: null, g: null, b: null}
+            let hexValues = hex.match(/[a-fA-F0-9]{2}/g);
 
-            } else if (hex.length === 7) {
-                r = '0x' + hex[1] + hex[2];
-                g = '0x' + hex[3] + hex[4];
-                b = '0x' + hex[5] + hex[6];
+            if (hex.length === 4) {
+                hexValues = hex.match(/[a-fA-F0-9]{1}/g);
+                hexValues = hexValues.map(hex => "" + hex + hex);
+            }
+            let count = 0;
+            for (const key in rgbObject) {
+                rgbObject[key] = parseInt(hexValues[count], 16);
+                count ++;
             }
 
             const opacity_value = typeof opacity === 'number' ? opacity : 1;
 
             return {
-                r: +r,
-                g: +g,
-                b: +b,
+                ...rgbObject,
                 a: opacity_value,
                 string: `rgba(${+r}, ${+g}, ${+b}, ${opacity_value})`
             };
@@ -751,7 +750,7 @@ export class ColorMangle {
             return this.hex(result);
 
         else if (type.includes('rgb'))
-            return this.rgba(rgb.a, result).string;
+            return this.rgba(rgb.a, result).toString();
 
         else if (type.includes('hsl'))
             return this.hsla(rgb.a, result).string;
