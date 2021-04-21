@@ -1,4 +1,4 @@
-
+node_modules/
 node_modules/.bin/acorn.cmd
 .idea/colormangle.iml
 .idea/misc.xml
