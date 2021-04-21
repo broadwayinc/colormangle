@@ -1,5 +1,5 @@
 // To test on local browser, remove export
-/*export default */class ColorMangle {
+export default class ColorMangle {
     /**
      * An user-friendly text and background color selector for UI design. ColorMangle converts color strings to various format.
      * @param {string} [color='teal'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
