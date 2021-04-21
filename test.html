@@ -2,21 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>
-    <!--<script src="colormangle.js"></script>-->
+    <!--<script src="https://broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>-->
+    <script src="./src/colormangle.js"></script>
     <title>colormangle.js</title>
 </head>
+<style>
+    #colorScheme {
+        --black: rgba(0, 0, 0, 0.015);
+        --white: rgba(255, 255, 255, 0.015);
+        /*width: 1100px;*/
+        background-size: 8px 8px;
+        background-image: linear-gradient(45deg, var(--black) 25%, var(--white) 25%, var(--white)),
+        linear-gradient(-45deg, var(--black) 25%, var(--white) 25%, var(--white)),
+        linear-gradient(45deg, var(--white) 75%, var(--black) 75%),
+        linear-gradient(-45deg, var(--white) 75%, var(--black) 75%)
+    }
+
+    .colorBox {
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+        vertical-align: middle;
+        border: grey solid 1px;
+        margin: 8px;
+    }
+
+    .colorBox > p {
+        text-align: center;
+        margin: 0;
+        white-space: pre-wrap;
+    }
+</style>
 <body>
 <div id="test1"></div>
 <div id="test2"></div>
+<div id="test3" style="color: #004abf"></div>
+<hr>
+<input style='margin: 8px;' id='backgroundSelector' type="color" value='#32ACA7'>
+<div class="colorBox" id="textColor">
+    Text Color
+</div>
+<hr>
+<p style='margin: 8px;'>Color Scheme</p>
+<input style='margin: 8px;' id='colorSelector' type="color" value='#00807f'>
+<div id="colorScheme">
+</div>
 </body>
 <script>
     let color1 = '#00807f';
     let cm = new ColorMangle(color1);
 
-    console.log(cm.contrastRatio('#004abf'));
     let test1 = document.getElementById('test1');
     let test2 = document.getElementById('test2');
+    let test3 = document.getElementById('test3');
 
     test1.innerText = color1; // insert text in a box
     test1.style.color = cm.textColor(); // text color
@@ -24,10 +62,66 @@
 
     let color2 = cm.rgba();
 
-    console.log(color2);
-
     test2.innerText = color2.string;
     test2.style.color = color2.string;
     test2.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+
+    test3.innerText = `Contrast ratio between ${color1} | #004abf is: ${cm.contrastRatio('#004abf')}`;
+
+    let colorSelector = document.getElementById('colorSelector');
+
+    let colorScheme = new ColorMangle(colorSelector.value);
+    let currentColorScheme = colorScheme.colorScheme(colorSelector.value);
+
+    let colorSchemeElements = document.getElementById('colorScheme');
+
+    let listColor = (cs) => {
+        colorSchemeElements.innerHTML = '';
+
+        let pre = '';
+        for (let k in cs) {
+            // if (k.includes('text'))
+            //     continue;
+            let curr = k.split('-')[2].split('_')[0]
+            if(pre && curr !== pre) {
+                let hr = document.createElement('hr');
+                // let br2 = document.createElement('br');
+                colorSchemeElements.append(hr);
+            }
+            pre = curr;
+            let c = cs[k];
+            let colorBox = document.createElement('div');
+            colorBox.classList.add('colorBox');
+            colorBox.style.backgroundColor = c;
+
+            let cssVar = document.createElement('p');
+            cssVar.innerHTML = `${k}\n${c}`;
+
+            let textColor = colorScheme.textColor(1, c);
+            cssVar.style.color = textColor;
+
+            colorBox.append(cssVar);
+
+            colorSchemeElements.append(colorBox);
+        }
+    };
+
+    listColor(currentColorScheme);
+    colorSelector.addEventListener('change', (e) => {
+        currentColorScheme = colorScheme.colorScheme(e.target.value);
+        listColor(currentColorScheme);
+    });
+
+    let textColor = (e) => {
+        let color = e?.target?.value || document.getElementById('backgroundSelector').value;
+        document.getElementById('textColor').style.backgroundColor = color;
+        document.getElementById('textColor').style.color = colorScheme.textColor(1, color);
+    };
+    textColor();
+    document.getElementById('backgroundSelector').addEventListener('input', (e) => {
+        textColor();
+    });
+
+
 </script>
 </html>
