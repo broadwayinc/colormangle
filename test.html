@@ -6,8 +6,55 @@
     <script src="./src/colormangle.js"></script>
     <title>colormangle.js</title>
 </head>
+
+<body>
+<div id="test1"></div>
+<div id="test2"></div>
+<div id="test3" style="color: #018281"></div>
+<hr>
+<div class="colorBox" id="textColor">
+    Text Color
+</div>
+<br>
+<input style='margin: 8px;' id='backgroundSelector' type="color" value='#018281'>
+<hr>
+<p style='margin: 8px;'>Color Scheme</p>
+<div id="schemeDemo">
+    <div id="head">
+        <h2>HEAD</h2>
+        <p>Text text text</p>
+    </div>
+    <div id="content">
+        <div id="menu">
+            <p>Menu</p>
+            <p>Non Select</p>
+            <p>Selected</p>
+        </div>
+        <div id="article">
+            <p>CONTENT</p>
+            <p id="msg">Text Button</p>
+            <p id="alert">Alert message</p>
+        </div>
+    </div>
+    <div id="somethingelse">
+        <p>SOMETHINGELSE</p>
+        <h4 id="button">BUTTON</h4>
+    </div>
+    <div id="foot">
+        FOOT
+    </div>
+</div>
+<input style='margin: 8px;' id='colorSelector' type="color" value='#FFD43B'>
+<input style='margin: 8px;' id='darkmodeSelector' type="checkbox"> Dark Mode
+<div id="colorScheme">
+</div>
+<div id='varList' style="text-align:left;white-space: break-spaces;"></div>
+</body>
 <style>
-    #colorScheme {
+    body {
+        background-color: var(--background);
+        color: var(--background-text);
+        text-align: center;
         --black: rgba(0, 0, 0, 0.015);
         --white: rgba(255, 255, 255, 0.015);
         /*width: 1100px;*/
@@ -18,12 +65,88 @@
         linear-gradient(-45deg, var(--white) 75%, var(--black) 75%)
     }
 
+    #schemeDemo {
+        text-align: center;
+        height: 500px;
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: var(--background);
+        color: var(--background-text);
+        margin: auto;
+    }
+
+    #head {
+        background-color: var(--focus);
+        color: var(--focus-text);
+    }
+
+    #head h2 {
+        background-color: var(--complementary);
+        color: var(--complementary-text);
+        padding: 1rem;
+    }
+
+    #somethingelse {
+        background-color: var(--analogous_transparent);
+    }
+
+    #msg {
+        color: var(--button-nude);
+        font-weight: bold;
+    }
+
+    #alert {
+        color: var(--alert);
+        font-weight: bold;
+    }
+
+    #button {
+        color: var(--button-text);
+        background-color: var(--button);
+        padding: 1rem;
+    }
+
+    #foot {
+        background-color: var(--analogous);
+        color: var(--analogous-text);
+    }
+
+    #schemeDemo * {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #content {
+        flex-direction: row;
+    }
+
+    #article {
+        background-color: var(--content);
+        color: var(--content-text);
+    }
+
+    #menu p:first-child {
+        background-color: var(--background-focus);
+        color: var(--background-focus-text);
+        padding: 1rem;
+    }
+
+    #menu p:last-child {
+        color: var(--background-focus-nude);
+    }
+
     .colorBox {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        padding: 1em 0;
         display: inline-block;
         vertical-align: middle;
         border: grey solid 1px;
+        text-align: center;
         margin: 8px;
     }
 
@@ -33,23 +156,8 @@
         white-space: pre-wrap;
     }
 </style>
-<body>
-<div id="test1"></div>
-<div id="test2"></div>
-<div id="test3" style="color: #004abf"></div>
-<hr>
-<input style='margin: 8px;' id='backgroundSelector' type="color" value='#32ACA7'>
-<div class="colorBox" id="textColor">
-    Text Color
-</div>
-<hr>
-<p style='margin: 8px;'>Color Scheme</p>
-<input style='margin: 8px;' id='colorSelector' type="color" value='#00807f'>
-<div id="colorScheme">
-</div>
-</body>
 <script>
-    let color1 = '#00807f';
+    let color1 = '#018281';
     let cm = new ColorMangle(color1);
 
     let test1 = document.getElementById('test1');
@@ -68,22 +176,32 @@
 
     test3.innerText = `Contrast ratio between ${color1} | #004abf is: ${cm.contrastRatio('#004abf')}`;
 
+    let darkmode = false;
+
     let colorSelector = document.getElementById('colorSelector');
 
     let colorScheme = new ColorMangle(colorSelector.value);
-    let currentColorScheme = colorScheme.colorScheme(colorSelector.value);
+    let currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
 
     let colorSchemeElements = document.getElementById('colorScheme');
 
     let listColor = (cs) => {
         colorSchemeElements.innerHTML = '';
-
+        let varList = document.getElementById('varList');
+        varList.innerHTML = '';
         let pre = '';
         for (let k in cs) {
             // if (k.includes('text'))
             //     continue;
-            let curr = k.split('-')[2].split('_')[0]
-            if(pre && curr !== pre) {
+
+            varList.innerHTML += `* @property {string} ${k}` + '\n';
+
+            let body = document.getElementsByTagName('body')[0];
+
+            body.style.setProperty(k, cs[k]);
+
+            let curr = k.split('-')[2].split('_')[0];
+            if (pre && curr !== pre) {
                 let hr = document.createElement('hr');
                 // let br2 = document.createElement('br');
                 colorSchemeElements.append(hr);
@@ -106,9 +224,18 @@
         }
     };
 
+    let currColor = document.getElementById('backgroundSelector').value;
     listColor(currentColorScheme);
-    colorSelector.addEventListener('change', (e) => {
-        currentColorScheme = colorScheme.colorScheme(e.target.value);
+    colorSelector.addEventListener('input', (e) => {
+        currColor = e.target.value;
+        currentColorScheme = colorScheme.colorScheme(currColor, darkmode);
+        listColor(currentColorScheme);
+    });
+    let darkmodeSelector = document.getElementById('darkmodeSelector');
+
+    darkmodeSelector.addEventListener('input', (e) => {
+        darkmode = e.target.checked;
+        currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
         listColor(currentColorScheme);
     });
 

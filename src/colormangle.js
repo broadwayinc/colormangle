@@ -1,10 +1,10 @@
-// To test on local browser, remove export
+// To test on local browser, remove export default
 export default class ColorMangle {
     /**
      * An user-friendly text and background color selector for UI design. ColorMangle converts color strings to various format.
      * @param {string} [color='teal'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
-    constructor(color = 'teal') {
+    constructor(color = '#4848db') {
         this.colorName = {
             "aliceblue": "#f0f8ff",
             "antiquewhite": "#faebd7",
@@ -224,7 +224,7 @@ export default class ColorMangle {
 
         } catch (err) {
             if (throwErr)
-                throw err;
+                throw err + ':' + color;
         }
 
         return {};
@@ -232,196 +232,378 @@ export default class ColorMangle {
 
     /**
      * @typedef {Object} colorScheme
-     * @property {string} --shadow - rgba(0, 0, 0, 0.05)
-     * @property {string} --light - rgba(255, 255, 255, 0.05)
-     * @property {string} --overlay - rgba(0, 0, 0, 0.25)
-     * @property {string} --alert - #ff6347
+     * @property {string} --alert
+     * @property {string} --alert-text
+     * @property {string} --alert-text_placeholder
+     * @property {string} --alert-text_shade
+     * @property {string} --alert-text_shadow
+     * @property {string} --alert-text_soft
+     * @property {string} --alert-text_transparent
+     * @property {string} --alert_placeholder
+     * @property {string} --alert_shade
+     * @property {string} --alert_shadow
+     * @property {string} --alert_soft
+     * @property {string} --alert_transparent
+     * @property {string} --analogous
+     * @property {string} --analogous-text
+     * @property {string} --analogous-text_placeholder
+     * @property {string} --analogous-text_shade
+     * @property {string} --analogous-text_shadow
+     * @property {string} --analogous-text_soft
+     * @property {string} --analogous-text_transparent
+     * @property {string} --analogous_placeholder
+     * @property {string} --analogous_shade
+     * @property {string} --analogous_shadow
+     * @property {string} --analogous_soft
+     * @property {string} --analogous_transparent
      * @property {string} --background
      * @property {string} --background-focus
-     * @property {string} --background-focus_faded
-     * @property {string} --background-focus_transparent
+     * @property {string} --background-focus-nude
+     * @property {string} --background-focus-nude_placeholder
+     * @property {string} --background-focus-nude_shade
+     * @property {string} --background-focus-nude_shadow
+     * @property {string} --background-focus-nude_soft
+     * @property {string} --background-focus-nude_transparent
      * @property {string} --background-focus-text
+     * @property {string} --background-focus-text_placeholder
+     * @property {string} --background-focus-text_shade
+     * @property {string} --background-focus-text_shadow
+     * @property {string} --background-focus-text_soft
+     * @property {string} --background-focus-text_transparent
+     * @property {string} --background-focus_placeholder
+     * @property {string} --background-focus_shade
+     * @property {string} --background-focus_shadow
+     * @property {string} --background-focus_soft
+     * @property {string} --background-focus_transparent
      * @property {string} --background-text
+     * @property {string} --background-text_placeholder
+     * @property {string} --background-text_shade
+     * @property {string} --background-text_shadow
+     * @property {string} --background-text_soft
      * @property {string} --background-text_transparent
-     * @property {string} --background-placeholder
+     * @property {string} --background_placeholder
+     * @property {string} --background_shade
+     * @property {string} --background_shadow
+     * @property {string} --background_soft
+     * @property {string} --background_transparent
+     * @property {string} --button
+     * @property {string} --button-border
+     * @property {string} --button-nude
+     * @property {string} --button-nude_placeholder
+     * @property {string} --button-nude_shade
+     * @property {string} --button-nude_shadow
+     * @property {string} --button-nude_soft
+     * @property {string} --button-nude_transparent
+     * @property {string} --button-text
+     * @property {string} --button-text_placeholder
+     * @property {string} --button-text_shade
+     * @property {string} --button-text_shadow
+     * @property {string} --button-text_soft
+     * @property {string} --button-text_transparent
+     * @property {string} --button_placeholder
+     * @property {string} --button_shade
+     * @property {string} --button_shadow
+     * @property {string} --button_soft
+     * @property {string} --button_transparent
+     * @property {string} --complementary
+     * @property {string} --complementary-text
+     * @property {string} --complementary-text_placeholder
+     * @property {string} --complementary-text_shade
+     * @property {string} --complementary-text_shadow
+     * @property {string} --complementary-text_soft
+     * @property {string} --complementary-text_transparent
+     * @property {string} --complementary_placeholder
+     * @property {string} --complementary_shade
+     * @property {string} --complementary_shadow
+     * @property {string} --complementary_soft
+     * @property {string} --complementary_transparent
      * @property {string} --content
      * @property {string} --content-focus
-     * @property {string} --content-focus_faded
-     * @property {string} --content-focus_transparent
+     * @property {string} --content-focus-nude
+     * @property {string} --content-focus-nude_placeholder
+     * @property {string} --content-focus-nude_shade
+     * @property {string} --content-focus-nude_shadow
+     * @property {string} --content-focus-nude_soft
+     * @property {string} --content-focus-nude_transparent
      * @property {string} --content-focus-text
+     * @property {string} --content-focus-text_placeholder
+     * @property {string} --content-focus-text_shade
+     * @property {string} --content-focus-text_shadow
+     * @property {string} --content-focus-text_soft
+     * @property {string} --content-focus-text_transparent
+     * @property {string} --content-focus_placeholder
+     * @property {string} --content-focus_shade
+     * @property {string} --content-focus_shadow
+     * @property {string} --content-focus_soft
+     * @property {string} --content-focus_transparent
      * @property {string} --content-text
+     * @property {string} --content-text_placeholder
+     * @property {string} --content-text_shade
+     * @property {string} --content-text_shadow
+     * @property {string} --content-text_soft
      * @property {string} --content-text_transparent
-     * @property {string} --content-placeholder
+     * @property {string} --content_placeholder
+     * @property {string} --content_shade
+     * @property {string} --content_shadow
+     * @property {string} --content_soft
+     * @property {string} --content_transparent
+     * @property {string} --focus
+     * @property {string} --focus-text
+     * @property {string} --focus-text_placeholder
+     * @property {string} --focus-text_shade
+     * @property {string} --focus-text_shadow
+     * @property {string} --focus-text_soft
+     * @property {string} --focus-text_transparent
+     * @property {string} --focus_placeholder
+     * @property {string} --focus_shade
+     * @property {string} --focus_shadow
+     * @property {string} --focus_soft
+     * @property {string} --focus_transparent
+     * @property {string} --light
+     * @property {string} --overlay
+     * @property {string} --shade
+     * @property {string} --shadow
      * @property {string} --toolbar
      * @property {string} --toolbar-focus
-     * @property {string} --toolbar-focus_faded
-     * @property {string} --toolbar-focus_transparent
+     * @property {string} --toolbar-focus-nude
+     * @property {string} --toolbar-focus-nude_placeholder
+     * @property {string} --toolbar-focus-nude_shade
+     * @property {string} --toolbar-focus-nude_shadow
+     * @property {string} --toolbar-focus-nude_soft
+     * @property {string} --toolbar-focus-nude_transparent
      * @property {string} --toolbar-focus-text
+     * @property {string} --toolbar-focus-text_placeholder
+     * @property {string} --toolbar-focus-text_shade
+     * @property {string} --toolbar-focus-text_shadow
+     * @property {string} --toolbar-focus-text_soft
+     * @property {string} --toolbar-focus-text_transparent
+     * @property {string} --toolbar-focus_placeholder
+     * @property {string} --toolbar-focus_shade
+     * @property {string} --toolbar-focus_shadow
+     * @property {string} --toolbar-focus_soft
+     * @property {string} --toolbar-focus_transparent
      * @property {string} --toolbar-text
+     * @property {string} --toolbar-text_placeholder
+     * @property {string} --toolbar-text_shade
+     * @property {string} --toolbar-text_shadow
+     * @property {string} --toolbar-text_soft
      * @property {string} --toolbar-text_transparent
-     * @property {string} --toolbar-placeholder
-     * @property {string} --button
-     * @property {string} --button-focus
-     * @property {string} --button-focus_faded
-     * @property {string} --button-focus_transparent
-     * @property {string} --button-focus-text
-     * @property {string} --button-text
-     * @property {string} --button-text_transparent
-     * @property {string} --button-placeholder
+     * @property {string} --toolbar_placeholder
+     * @property {string} --toolbar_shade
+     * @property {string} --toolbar_shadow
+     * @property {string} --toolbar_soft
+     * @property {string} --toolbar_transparent
      */
     /**
      * Generates color scheme object.
      * @return {colorScheme}
      */
-    colorScheme(color = this.color) {
+    colorScheme(color = this.color, darkMode = false) {
+
         let opacity = {
             text: {black: 0.88, white: 1},
-            faded: {black: 14, white: 14},
             soft: {black: 0.66, white: 0.88},
             placeholder: {black: 0.33, white: 0.66},
             transparent: {black: 0.11, white: 0.33},
-            shadow: {black: 0.066, white: 0.11},
-            screen: {black: 0.033, white: 0.066}
+            shade: {black: 0.066, white: 0.11},
+            shadow: {black: 0.033, white: 0.066}
         };
 
-        let background = [
-            '--background',
-            '--content',
-            '--toolbar',
-            '--button'
-        ];
-
-        let attribute = [
-            '',
-            '-focus',
-            '-focus_faded',
-            '-focus_soft',
-            '-focus_shadow',
-            '-focus_transparent',
-            '-focus_screen',
-            '-focus-text',
-            '-text',
-            '-text_soft',
-            '-text_shadow',
-            '-text_transparent',
-            '-text_screen',
-            '-placeholder'
-        ];
-
-        let fixedValue = {
-            '--shadow': 'rgba(0, 0, 0, 0.05)',
-            '--shade': 'rgba(0, 0, 0, 0.15)',
-            '--light': 'rgba(255, 255, 255, 0.15)',
-            '--alert': this.colorName.tomato,
-            '--overlay': 'rgba(0, 0, 0, 0.25)'
+        let template = {
+            '--background': darkMode ? '#121212' : '#fafafa',
+            '--content': darkMode ? '#2b2b2b' : '#ffffff',
+            '--toolbar': darkMode ? '#2b2b2b' : '#ffffff',
         };
 
-        for (let l of ['transparent', 'soft', 'shadow', 'screen']) {
-            fixedValue['--alert-' + l] = this.rgba(opacity[l].black, fixedValue['--alert']).string;
-        }
+        let focusOriginal;
 
-        let focusDefault = this._colorType(color).color;
-
-        let variableList = (() => {
-            let list = [];
-            for (let bk of background) {
-                // --{background}-{background(_attribute)}-{target(_attribute)}
-                for (let att of attribute)
-                    list.push(bk + att);
+        let focus = (() => {
+            if (color && typeof color === 'object') {
+                if (color['--button']) {
+                    focusOriginal = color['--button'];
+                    return focusOriginal;
+                }
+                for (let key of color)
+                    if (key.includes('focus')) {
+                        focusOriginal = color[key];
+                        return focusOriginal;
+                    }
             }
-            return list;
+
+            focusOriginal = color;
+            return darkMode ? this.matchLuminance(color, template['--content'], 4.5) : color;
+        })();
+        let compDir = 1;
+        let analogous = (() => {
+            let deg = 30;
+            let analogous = this.analogous(focusOriginal, deg);
+            let focusHSL = this.hsla(1, focusOriginal).h;
+            let an1HSL = this.hsla(1, analogous[0]).h;
+            let an2HSL = this.hsla(1, analogous[1]).h;
+
+            if (focusHSL + deg > 360)
+                an1HSL = an1HSL + 360;
+            if (focusHSL - deg < 0)
+                an2HSL = 360 - an2HSL;
+
+            if (Math.abs(focusHSL - an1HSL) > Math.abs(focusHSL - an2HSL)) {
+                compDir = -1;
+                return analogous[1];
+            }
+
+            return analogous[0];
+            // return analogous;
         })();
 
-        let scheme = {};
-        let missingList = [];
-        let focusColorKey = [];
+        // let complementary = this.hsla(1, this.complementary(focus, 60 * compDir));
+        let complementary = this.complementary(focus, 60 * compDir);
+        // complementary.s += complementary.s < 50 ? (100 - complementary.s) / 3 : 0;
+        // complementary.l -= complementary.l > 50 ? (100 - complementary.l) / 3 : 0;
+        // complementary = this.toString(complementary);
+        complementary = this.matchLuminance(complementary, template['--background'], 3.1);
 
-        let fillMissing = (missing) => {
-            for (let m of missing) {
-                let splitKey = m.split('-');
-                let target = splitKey[splitKey.length - 1];
-
-                if (splitKey.length === 3) {
-                    // '--background',
-                    // '--content',
-                    // '--toolbar',
-                    // '--button'
-
-                    if (target === 'button') {
-                        if (focusColorKey.length)
-                            scheme[m] = scheme[focusColorKey[focusColorKey.length - 1]];
-                        else
-                            scheme[m] = focusDefault;
-                    } else {
-                        if (scheme[m + '-text'])
-                            scheme[m] = this.textColor(opacity.text, scheme[m + '-text']);
-                        else {
-                            let t = this.textColor();
-
-                            if (target === 'background' && t === '#ffffff')
-                                t = this.adjustBrightness(-4, t);
-                            else if (target === 'content' && scheme['--background'] && !this.isHighLuminance(scheme['--background']))
-                                t = this.adjustBrightness(14, scheme['--background']);
-
-                            scheme[m] = t;
-                        }
-                    }
-                } else {
-                    if (target === 'focus') {
-                        if (focusColorKey.length)
-                            scheme[m] = scheme[focusColorKey[focusColorKey.length - 1]];
-                        else if (scheme['--button'])
-                            scheme[m] = scheme['--button'];
-                        else
-                            scheme[m] = focusDefault;
-                    } else if (target === 'text' || target === 'placeholder') {
-                        let bk_key = m.replace('-' + target, '');
-                        if (scheme[bk_key])
-                            scheme[m] = this.textColor(opacity[target], scheme[bk_key]);
-                        else
-                            scheme[m] = `#808080`;
-                    } else if (target.includes('faded')) {
-                        let t_key = m.replace('_faded', '');
-                        if (scheme[t_key])
-                            scheme[m] = this.adjustBrightness(this.isHighLuminance(scheme[t_key]) ? opacity.faded.black : opacity.faded.white, scheme[t_key]);
-                        else
-                            scheme[m] = `#808080`;
-                    } else {
-                        for (let l of ['transparent', 'soft', 'shadow', 'screen']) {
-                            if (target.includes(l)) {
-                                let t_key = m.replace('_' + l, '');
-                                if (scheme[t_key])
-                                    scheme[m] = this.rgba(this.isHighLuminance(scheme[t_key]) ? opacity[l].white : opacity[l].black, scheme[t_key]).string;
-                                else
-                                    scheme[m] = `#808080`;
-                            }
-                        }
-                    }
-                }
-            }
+        let fixedValue = {
+            '--shadow': 'rgba(0, 0, 0, 0.011)',
+            '--shade': 'rgba(0, 0, 0, 0.044)',
+            '--transparent': 'rgba(0, 0, 0, 0.11)',
+            '--light': 'rgba(255, 255, 255, 0.33)',
+            '--overlay': 'rgba(0, 0, 0, 0.25)',
         };
 
-        if (typeof color === 'object' && Object.keys(color).length && !Array.isArray(color)) {
+        let darkModeAnalogous = darkMode ? this.matchLuminance(analogous, template['--background'], 4.5) : analogous;
+        let analogousNude = this.matchLuminance(analogous, template['--background'], 4.5);
 
-            for (let k of variableList) {
-                if (color[k]) {
-                    let splitKey = k.split('-');
-                    let target = splitKey[splitKey.length - 1];
-                    if (target === 'button' || target === 'focus')
-                        focusColorKey.push(k);
-                    scheme[k] = color[k];
-                } else
-                    missingList.push(k);
-            }
-
-            if (missingList.length)
-                fillMissing(missingList);
-
-        } else if (typeof color === 'string') {
-            fillMissing(variableList);
+        for (let k in template) {
+            template[k + '-text'] = this.textColor(opacity.text, template[k]);
+            template[k + '-focus'] = k.includes('--background') ? darkModeAnalogous : focus;
+            template[k + '-focus-nude'] = k.includes('--background') ? analogousNude : this.matchLuminance(focus, template[k], 4.5);
+            template[k + '-focus-text'] = this.textColor(1, k.includes('--background') ? darkModeAnalogous : focus);
         }
 
-        return Object.assign(fixedValue, scheme);
+        template['--focus'] = focusOriginal;
+        template['--focus-text'] = this.textColor(1, focusOriginal);
+
+        Object.assign(template, {
+            '--complementary': complementary,
+            '--complementary-text': this.textColor(1, complementary),
+            '--analogous': analogous,
+            '--analogous-text': this.textColor(1, analogous),
+            '--alert': 'tomato',
+            '--alert-text': 'white',
+            '--button': focus,
+            '--button-nude': this.matchLuminance(focus, template["--content"], 7),
+            '--button-text': this.textColor(1, focus),
+        });
+
+        for (let k in template)
+            for (let op of ['soft', 'placeholder', 'transparent', 'shadow', 'shade']) {
+                let txtOfBg = this.textColor(1, template[k]);
+                template[k + '_' + op] = this.rgba(opacity[op][op.includes('text') ? txtOfBg : txtOfBg === 'black' ? 'white' : 'black'], template[k]).string;
+            }
+
+        template['--button-border'] = this.textColor(1, template['--button'], false) === 'white' ? fixedValue['--shade'] : fixedValue['--shadow'];
+
+        if (color && typeof color === 'object') {
+            for (let key of color)
+                if (key[0] !== '-')
+                    throw 'invalid color scheme';
+            Object.assign(template, color);
+        }
+
+        let unordered = Object.assign(template, fixedValue);
+        return Object.keys(unordered).sort().reduce(
+            (obj, key) => {
+                obj[key] = unordered[key];
+                return obj;
+            },
+            {}
+        );
+    }
+
+    _getAlpha(color_arg = this.color) {
+        let extract = this._extractRGBAHSLADigit(color_arg);
+        return extract ? extract[3] || 1 : 1;
+    }
+
+    matchLuminance(col, color_arg = this.color, meet) {
+        // return col;
+        let {color} = this._colorType(color_arg);
+
+        if (meet) {
+            let adj = this.hex(col);
+            let m = this.contrastRatio(adj, color);
+            if (m < meet) {
+                let dir = this.textColor(1, color) === 'white' ? 1 : -1;
+                let count = 100;
+                while (m < meet && count--) {
+                    // let adj_set = this.adjustBrightness(1 * dir, adj);
+                    let adj_set = this.adjustSaturation(1 * dir, adj);
+                    // let adj_set = this.adjustLuminance(1 * dir, adj);
+                    if (adj === adj_set)
+                        break;
+                    adj = adj_set;
+
+                    m = this.contrastRatio(adj, color);
+                }
+            }
+            return this.hex(adj);
+        } else {
+            let main_lum = this._luminance(color);
+            let lum = this._luminance(col);
+
+            if (Math.abs(lum - main_lum) < 0.01)
+                return col;
+
+            let adj = this.hex(col);
+
+            let dir = (lum, main_lum) => {
+                return lum < main_lum ? 1 : -1;
+            };
+
+            let currDir = dir(lum, main_lum);
+            while (Math.abs(lum - main_lum) > 0.01 && currDir === dir(lum, main_lum)) {
+                let adj_set = this.adjustBrightness(currDir, adj);
+                // let adj_set = this.adjustSaturation(currDir, adj);
+                // let adj_set = this.adjustLuminance(currDir, adj);
+                let lum_pre = this._luminance(adj_set);
+                if (lum_pre === lum || currDir !== dir(lum_pre, main_lum))
+                    break;
+                lum = lum_pre;
+                adj = adj_set;
+            }
+            return this.hex(adj);
+        }
+    }
+
+    analogous(color_arg = this.color, deg = 30) {
+        let {color} = this._colorType(color_arg);
+
+        let spin = (h, v) => {
+            let val = h + v;
+            return val < 0 ? 360 + val : val > 360 ? val - 360 : val;
+        };
+
+        let hsl = this.hsla(this._getAlpha(color), color);
+        let plus = 'hsla(' + spin(hsl.h, deg) + ', ' + hsl.s + '%, ' + hsl.l + '%, ' + hsl.a + ')';
+        let minus = 'hsla(' + spin(hsl.h, -deg) + ', ' + hsl.s + '%, ' + hsl.l + '%, ' + hsl.a + ')';
+
+        return [this.matchLuminance(plus, color), this.matchLuminance(minus, color)];
+    }
+
+    complementary(color_arg = this.color, add = 0) {
+        let {color} = this._colorType(color_arg);
+
+        let hsl = this.hsla(this._getAlpha(color), color);
+
+        if (hsl.h < 180)
+            hsl.h += 180;
+        else
+            hsl.h -= 180;
+
+        hsl.h += add;
+        hsl.h = hsl.h > 360 ? hsl.h - 360 : hsl.h < 0 ? 360 - hsl.h : hsl.h;
+
+        return this.hex(this.toString(hsl));
     }
 
     /**
@@ -433,11 +615,66 @@ export default class ColorMangle {
 
         let yiq =
             fineTuned ?
-                ((r * (299 - 128)) + (g * (587 + 64)) + (b * (114 + 64))) / 1000 : // Fine tuned
+                ((r * (299 - 64)) + (g * (587 * 1.25)) + (b * 114)) / 1000 : // Fine tuned
                 ((r * 299) + (g * 587) + (b * 114)) / 1000; // Standard color space formula
 
         // Web standard of color space threshold is 128
-        return (yiq >= (fineTuned ? 142 : 128));
+        return (yiq >= (fineTuned ? 188 : 128));
+        // return (yiq >= 128);
+    }
+
+    _luminance(color_arg = this.color) {
+        let rgb = this.rgba(1, color_arg);
+        let a = [rgb.r, rgb.g, rgb.b].map(function (v) {
+            v /= 255;
+            return v <= 0.03928
+                ? v / 12.92
+                : Math.pow((v + 0.055) / 1.055, 2.4);
+        });
+
+        return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+    }
+
+    adjustSaturation(value, color_arg = this.color) {
+        let {type, color} = this._colorType(color_arg);
+        let col = this.hsla(this._getAlpha(color), color);
+
+        let limit = (v, limit = 100) => {
+            return v > limit ? limit : v < 0 ? 0 : v;
+        };
+
+        col.s += ((value > 0 ? (100 - col.s) : col.s) / 100) * value;
+        col.s = limit(col.s);
+        col.l += ((value > 0 ? (100 - col.l) : col.l) / 100) * value;
+        col.l = limit(col.l);
+
+        return this.toString(col);
+    }
+
+    adjustLuminance(value, color_arg = this.color) {
+        let {type, color} = this._colorType(color_arg);
+        let col = this.hsla(this._getAlpha(color), color);
+
+        let limit = (v, limit = 100) => {
+            return v > limit ? limit : v < 0 ? 0 : v;
+        };
+
+        col.l += ((value > 0 ? (100 - col.l) : col.l) / 100) * value;
+        col.l = limit(col.l);
+
+        return this.toString(col);
+    }
+
+    toString(col) {
+        if (typeof col === 'string')
+            return col;
+
+        if (col.hasOwnProperty('h'))
+            return 'hsla(' + (col.h || 0) + ', ' + (col.s || 100) + '%, ' + (col.l || 100) + '%, ' + (col.a || 1) + ')';
+
+        if (col.hasOwnProperty('r'))
+            return 'rgba(' + (col.r || 100) + ', ' + (col.g || 100) + ', ' + (col.b || 100) + ', ' + (col.a || 1) + ')';
+        throw col;
     }
 
     /**
@@ -446,22 +683,9 @@ export default class ColorMangle {
      * @param {string} color_arg - Color string you want to compare luminance ratio.
      * @return {number}
      */
-    contrastRatio(color_arg) {
-        let luminance = (c) => {
-            let rgb = this.rgba(1, c);
-
-            let a = [rgb.r, rgb.g, rgb.b].map(function (v) {
-                v /= 255;
-                return v <= 0.03928
-                    ? v / 12.92
-                    : Math.pow((v + 0.055) / 1.055, 2.4);
-            });
-
-            return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
-        }
-
-        let lum1 = luminance(this.color) + 0.05;
-        let lum2 = luminance(color_arg) + 0.05;
+    contrastRatio(color_arg, color_arg2) {
+        let lum1 = this._luminance(color_arg2 || this.color) + 0.05;
+        let lum2 = this._luminance(color_arg) + 0.05;
 
         return lum1 > lum2 ? lum1 / lum2 : lum2 / lum1;
     }
@@ -471,9 +695,15 @@ export default class ColorMangle {
      * @param {number | {}} opacity - Can set returning color values opacity.
      * @param {number} opacity.black - Set returning color values opacity when the result color is black.
      * @param {number} opacity.white - Set returning color values opacity when the result color is white.
-     * @return {number}
+     * @return {string | null}
      */
-    textColor(opacity = 1, color_arg = this.color) {
+    textColor(opacity = 1, color_arg = this.color, fineTuned = true) {
+        const {type = this.type, color = this.color} = this._colorType(color_arg);
+
+        // returns null if color opacity is below 0.5
+        if (this._getAlpha(color_arg) < 0.5)
+            return null;
+
         let blackOpacity, whiteOpacity;
 
         if (typeof opacity === 'number' && opacity < 1) {
@@ -499,10 +729,10 @@ export default class ColorMangle {
             } else return 1;
         };
 
-        if (this.isHighLuminance(this._colorType(color_arg).color))
-            return blackOpacity ? `rgba(0, 0, 0, ${opa(blackOpacity)})` : '#000000';
+        if (this.isHighLuminance(color, fineTuned))
+            return blackOpacity ? `rgba(0, 0, 0, ${opa(blackOpacity)})` : 'black';
 
-        return whiteOpacity ? `rgba(255, 255, 255, ${opa(whiteOpacity)})` : '#ffffff';
+        return whiteOpacity ? `rgba(255, 255, 255, ${opa(whiteOpacity)})` : 'white';
     }
 
     /**
@@ -555,7 +785,7 @@ export default class ColorMangle {
                 h: h,
                 s: s,
                 l: l,
-                string: 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + opacity + ')'
+                string: this.toString({h, s, l, a: opacity})
             };
 
         } else {
@@ -571,7 +801,12 @@ export default class ColorMangle {
                     h: digit[0],
                     s: digit[1],
                     l: digit[2],
-                    string: 'hsla(' + digit[0] + ', ' + digit[1] + '%, ' + digit[2] + '%, ' + a + ')'
+                    string: this.toString({
+                        h: digit[0],
+                        s: digit[1],
+                        l: digit[2],
+                        a
+                    })
                 };
 
             } else if (type.includes('rgb')) {
@@ -591,7 +826,7 @@ export default class ColorMangle {
                     s: s,
                     l: l,
                     a: value.a,
-                    string: 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + value.a + ')'
+                    string: this.toString({h, s, l, a: value.a})
                 });
 
             }
@@ -624,7 +859,7 @@ export default class ColorMangle {
 
         if (type === 'hex') {
             const hex = color;
-            let rgbObject = {r: null, g: null, b: null}
+            let rgbObject = {r: null, g: null, b: null};
             let hexValues = hex.match(/[a-fA-F0-9]{2}/g);
 
             if (hex.length === 4) {
@@ -634,15 +869,18 @@ export default class ColorMangle {
             let count = 0;
             for (const key in rgbObject) {
                 rgbObject[key] = parseInt(hexValues[count], 16);
-                count ++;
+                count++;
             }
 
             const opacity_value = typeof opacity === 'number' ? opacity : 1;
+            let {r, g, b} = rgbObject;
 
             return {
                 ...rgbObject,
                 a: opacity_value,
-                string: `rgba(${+r}, ${+g}, ${+b}, ${opacity_value})`
+                string: this.toString({
+                    r: +r, g: +g, b: +b, a: opacity_value
+                })
             };
 
         } else {
@@ -659,7 +897,7 @@ export default class ColorMangle {
                 };
 
                 return Object.assign({
-                    string: `rgba(${value.r}, ${value.g}, ${value.b}, ${value.a})`
+                    string: this.toString(value)
                 }, value);
 
             } else if (type.includes('hsl')) {
@@ -708,7 +946,7 @@ export default class ColorMangle {
 
                 return {
                     r, g, b, a,
-                    string: 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')'
+                    string: this.toString({r, g, b, a})
                 };
 
             }
@@ -734,6 +972,7 @@ export default class ColorMangle {
             g: 0 - rgb['g'],
             b: 0 - rgb['b']
         };
+
         if (light > 0) {
             Object.keys(rgbRange).map(function (key) {
                 rgbRange[key] = 255 - rgb[key];
@@ -750,7 +989,7 @@ export default class ColorMangle {
             return this.hex(result);
 
         else if (type.includes('rgb'))
-            return this.rgba(rgb.a, result).toString();
+            return this.rgba(rgb.a, result).string;
 
         else if (type.includes('hsl'))
             return this.hsla(rgb.a, result).string;
