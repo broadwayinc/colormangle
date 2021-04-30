@@ -403,20 +403,21 @@ export default class ColorMangle {
         let opacity = {
             text: {black: 0.88, white: 1},
             soft: {black: 0.66, white: 0.88},
-            placeholder: {black: 0.33, white: 0.66},
-            transparent: {black: 0.11, white: 0.33},
+            placeholder: {black: 0.33, white: 0.44},
+            transparent: {black: 0.22, white: 0.33},
             shade: {black: 0.066, white: 0.11},
             shadow: {black: 0.033, white: 0.066}
         };
 
         let template = {
-            '--background': darkMode ? '#121212' : '#fafafa',
+            '--background': darkMode ? '#121212' : '#f7f7f7',
             '--content': darkMode ? '#2b2b2b' : '#ffffff',
             '--toolbar': darkMode ? '#2b2b2b' : '#ffffff',
         };
 
         let focusOriginal;
-
+        let focusSat;
+        let content_isHighLuminance = this.isHighLuminance(template['--content']);
         let focus = (() => {
             if (color && typeof color === 'object') {
                 if (color['--button']) {
@@ -431,7 +432,8 @@ export default class ColorMangle {
             }
 
             focusOriginal = color;
-            return darkMode ? this.matchLuminance(color, template['--content'], 4.5) : color;
+            focusSat = this.matchLuminance(color, template['--content'], content_isHighLuminance ? 1.5 : 4.5);
+            return darkMode ? focusSat : color;
         })();
         let compDir = 1;
         let analogous = (() => {
@@ -455,19 +457,14 @@ export default class ColorMangle {
             // return analogous;
         })();
 
-        // let complementary = this.hsla(1, this.complementary(focus, 60 * compDir));
-        let complementary = this.complementary(focus, 60 * compDir);
-        // complementary.s += complementary.s < 50 ? (100 - complementary.s) / 3 : 0;
-        // complementary.l -= complementary.l > 50 ? (100 - complementary.l) / 3 : 0;
-        // complementary = this.toString(complementary);
-        complementary = this.matchLuminance(complementary, template['--background'], 3.1);
-
+        let complementary = this.matchLuminance(this.complementary(focus, 60 * compDir), template['--background'], 3.1);
         let fixedValue = {
-            '--shadow': 'rgba(0, 0, 0, 0.011)',
-            '--shade': 'rgba(0, 0, 0, 0.044)',
-            '--transparent': 'rgba(0, 0, 0, 0.11)',
+            '--shadow': 'rgba(0, 0, 0, 0.033)',
+            '--shade': 'rgba(0, 0, 0, 0.066)',
+            '--transparent': 'rgba(0, 0, 0, 0.22)',
+            '--placeholder': 'rgba(0, 0, 0, 0.33)',
             '--light': 'rgba(255, 255, 255, 0.33)',
-            '--overlay': 'rgba(0, 0, 0, 0.25)',
+            '--overlay': 'rgba(0, 0, 0, 0.33)',
         };
 
         let darkModeAnalogous = darkMode ? this.matchLuminance(analogous, template['--background'], 4.5) : analogous;
@@ -482,6 +479,8 @@ export default class ColorMangle {
 
         template['--focus'] = focusOriginal;
         template['--focus-text'] = this.textColor(1, focusOriginal);
+        template['--saturate'] = focusSat;
+        template['--saturate-text'] = this.textColor(1, focusSat);
 
         Object.assign(template, {
             '--complementary': complementary,
@@ -490,18 +489,29 @@ export default class ColorMangle {
             '--analogous-text': this.textColor(1, analogous),
             '--alert': 'tomato',
             '--alert-text': 'white',
+            '--success': 'seagreen',
+            '--success-text': 'white',
             '--button': focus,
-            '--button-nude': this.matchLuminance(focus, template["--content"], 7),
+            '--button-nude': darkMode ? this.matchLuminance(focusOriginal, template["--content"], 7) : this.textColor(opacity.text, template['--content']),
             '--button-text': this.textColor(1, focus),
         });
 
-        for (let k in template)
-            for (let op of ['soft', 'placeholder', 'transparent', 'shadow', 'shade']) {
-                let txtOfBg = this.textColor(1, template[k]);
-                template[k + '_' + op] = this.rgba(opacity[op][op.includes('text') ? txtOfBg : txtOfBg === 'black' ? 'white' : 'black'], template[k]).string;
-            }
+        for (let k in template) {
+            if (!template[k] || template[k] === "'inherit'")
+                continue;
 
-        template['--button-border'] = this.textColor(1, template['--button'], false) === 'white' ? fixedValue['--shade'] : fixedValue['--shadow'];
+            let highLum = this.isHighLuminance(template[k]);
+            for (let op of ['soft', 'placeholder', 'transparent', 'shadow', 'shade']) {
+
+                template[k + '_' + op] = this.rgba(opacity[op][highLum ? 'white' : 'black'], template[k]).string;
+            }
+        }
+
+        template['--button-border'] = (() => {
+            let focus_isHighLuminance = this.isHighLuminance(focus);
+            let border = this.matchLuminance(this.adjustLuminance(-1, template['--button']), template['--button'], 1.15, -1, focus_isHighLuminance ? 'luminance' : 'brightness');
+            return focus_isHighLuminance ? this.rgba(0.5, border).string : border;
+        })();
 
         if (color && typeof color === 'object') {
             for (let key of color)
@@ -525,20 +535,31 @@ export default class ColorMangle {
         return extract ? extract[3] || 1 : 1;
     }
 
-    matchLuminance(col, color_arg = this.color, meet) {
-        // return col;
+    matchLuminance(color_target, color_arg = this.color, meet, direction, method) {
+        // return color_target;
         let {color} = this._colorType(color_arg);
+        let target = this._colorType(color_target).color;
 
         if (meet) {
-            let adj = this.hex(col);
+            let adj = target;
             let m = this.contrastRatio(adj, color);
             if (m < meet) {
-                let dir = this.textColor(1, color) === 'white' ? 1 : -1;
+                let dir = direction || this.isHighLuminance(color) ? -1 : 1;
                 let count = 100;
                 while (m < meet && count--) {
-                    // let adj_set = this.adjustBrightness(1 * dir, adj);
-                    let adj_set = this.adjustSaturation(1 * dir, adj);
-                    // let adj_set = this.adjustLuminance(1 * dir, adj);
+                    let adj_set;
+
+                    switch (method) {
+                        case 'brightness':
+                            adj_set = this.adjustBrightness(1 * dir, adj);
+                            break;
+                        case 'luminance':
+                            adj_set = this.adjustLuminance(1 * dir, adj);
+                            break;
+                        default:
+                            adj_set = this.adjustSaturation(1 * dir, adj);
+                    }
+
                     if (adj === adj_set)
                         break;
                     adj = adj_set;
@@ -549,12 +570,12 @@ export default class ColorMangle {
             return this.hex(adj);
         } else {
             let main_lum = this._luminance(color);
-            let lum = this._luminance(col);
+            let lum = this._luminance(target);
 
             if (Math.abs(lum - main_lum) < 0.01)
-                return col;
+                return target;
 
-            let adj = this.hex(col);
+            let adj = this.hex(target);
 
             let dir = (lum, main_lum) => {
                 return lum < main_lum ? 1 : -1;
@@ -562,9 +583,17 @@ export default class ColorMangle {
 
             let currDir = dir(lum, main_lum);
             while (Math.abs(lum - main_lum) > 0.01 && currDir === dir(lum, main_lum)) {
-                let adj_set = this.adjustBrightness(currDir, adj);
-                // let adj_set = this.adjustSaturation(currDir, adj);
-                // let adj_set = this.adjustLuminance(currDir, adj);
+                let adj_set;
+                switch (method) {
+                    case 'saturation':
+                        adj_set = this.adjustSaturation(currDir, adj);
+                        break;
+                    case 'luminance':
+                        adj_set = this.adjustLuminance(currDir, adj);
+                        break;
+                    default:
+                        adj_set = this.adjustBrightness(currDir, adj);
+                }
                 let lum_pre = this._luminance(adj_set);
                 if (lum_pre === lum || currDir !== dir(lum_pre, main_lum))
                     break;
@@ -610,7 +639,7 @@ export default class ColorMangle {
      * Check if the color has high luminance.
      * @return {boolean}
      */
-    isHighLuminance(color_arg = this.color, fineTuned = true) {
+    isHighLuminance(color_arg = this.color, fineTuned = false) {
         const {r, g, b} = this.rgba(1, this._colorType(color_arg).color);
 
         let yiq =
@@ -666,14 +695,17 @@ export default class ColorMangle {
     }
 
     toString(col) {
+        let numberOrNot = (n, def = 100) => {
+            return typeof n === 'number' ? n : def;
+        };
         if (typeof col === 'string')
             return col;
 
         if (col.hasOwnProperty('h'))
-            return 'hsla(' + (col.h || 0) + ', ' + (col.s || 100) + '%, ' + (col.l || 100) + '%, ' + (col.a || 1) + ')';
+            return 'hsla(' + (col.h || 0) + ', ' + numberOrNot(col.s) + '%, ' + numberOrNot(col.l) + '%, ' + numberOrNot(col.a, 1) + ')';
 
         if (col.hasOwnProperty('r'))
-            return 'rgba(' + (col.r || 100) + ', ' + (col.g || 100) + ', ' + (col.b || 100) + ', ' + (col.a || 1) + ')';
+            return 'rgba(' + numberOrNot(col.r) + ', ' + numberOrNot(col.g) + ', ' + numberOrNot(col.b) + ', ' + numberOrNot(col.a, 1) + ')';
         throw col;
     }
 
@@ -702,7 +734,7 @@ export default class ColorMangle {
 
         // returns null if color opacity is below 0.5
         if (this._getAlpha(color_arg) < 0.5)
-            return null;
+            return "inherit";
 
         let blackOpacity, whiteOpacity;
 
@@ -841,8 +873,8 @@ export default class ColorMangle {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (type.includes('rgb') || type.includes('hsl')) {
-            const opacity = this._extractRGBAHSLADigit(color)[3] || 1;
-            const rgba = this.rgba(opacity, color);
+            // const opacity = this._extractRGBAHSLADigit(color)[3] || 1;
+            const rgba = this.rgba(1, color);
             return '#' + ((1 << 24) + (rgba.r << 16) + (rgba.g << 8) + rgba.b).toString(16).slice(1);
         }
 
