@@ -1,8 +1,12 @@
 // To test on local browser, remove export default
-export default class ColorMangle {
+//export default
+class ColorMangle {
     /**
-     * An user-friendly text and background color selector for UI design. ColorMangle converts color strings to various format.
-     * @param {string} [color='teal'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
+     * ColorMangle is a JS library that:
+     * Converts color strings to various format,
+     * Retrieves adequate text color based on contrast ratio,
+     * Generates color schemes for web design, and more.
+     * @param {string} [color='#4848db'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
     constructor(color = '#4848db') {
         this.colorName = {
@@ -160,22 +164,6 @@ export default class ColorMangle {
         this.color = format.color;
     }
 
-    _extractRGBAHSLADigit(color_arg = this.color) {
-        const {type = this.type, color = this.color} = this._colorType(color_arg);
-
-        if (type === 'hex')
-            return null;
-
-        const value = [];
-
-        for (const i of color.match(/\d+(\.\d+)?/g))
-            value.push(parseFloat(i));
-
-        if (value.length < 4) value.push(1);
-
-        return value;
-    }
-
     _colorType(color = this.color, throwErr = true) {
         let chkType, type;
 
@@ -228,6 +216,32 @@ export default class ColorMangle {
         }
 
         return {};
+    }
+
+    _extractDigit(color_arg = this.color) {
+        let {type = this.type, color = this.color} = this._colorType(color_arg);
+
+        if (type === 'hex')
+            color = this.rgba(1, color).string;
+
+        const value = [];
+
+        for (const i of color.match(/\d+(\.\d+)?/g))
+            value.push(parseFloat(i));
+
+        if (value.length < 4) value.push(1);
+
+        return value;
+    }
+
+    /**
+     * Retrieves color alpha value
+     * @return {number} Range 0 - 1
+     */
+    getAlpha(color_arg = this.color) {
+
+        let extract = this._extractDigit(color_arg);
+        return extract ? extract[3] || 1 : 1;
     }
 
     /**
@@ -359,10 +373,33 @@ export default class ColorMangle {
      * @property {string} --focus_shadow
      * @property {string} --focus_soft
      * @property {string} --focus_transparent
-     * @property {string} --light
-     * @property {string} --overlay
+     * @property {string} --placeholder
+     * @property {string} --saturate
+     * @property {string} --saturate-text
+     * @property {string} --saturate-text_placeholder
+     * @property {string} --saturate-text_shade
+     * @property {string} --saturate-text_shadow
+     * @property {string} --saturate-text_soft
+     * @property {string} --saturate-text_transparent
+     * @property {string} --saturate_placeholder
+     * @property {string} --saturate_shade
+     * @property {string} --saturate_shadow
+     * @property {string} --saturate_soft
+     * @property {string} --saturate_transparent
      * @property {string} --shade
      * @property {string} --shadow
+     * @property {string} --success
+     * @property {string} --success-text
+     * @property {string} --success-text_placeholder
+     * @property {string} --success-text_shade
+     * @property {string} --success-text_shadow
+     * @property {string} --success-text_soft
+     * @property {string} --success-text_transparent
+     * @property {string} --success_placeholder
+     * @property {string} --success_shade
+     * @property {string} --success_shadow
+     * @property {string} --success_soft
+     * @property {string} --success_transparent
      * @property {string} --toolbar
      * @property {string} --toolbar-focus
      * @property {string} --toolbar-focus-nude
@@ -393,9 +430,12 @@ export default class ColorMangle {
      * @property {string} --toolbar_shadow
      * @property {string} --toolbar_soft
      * @property {string} --toolbar_transparent
+     * @property {string} --transparent
      */
     /**
      * Generates color scheme object.
+     * @param {string} [color=this.color] - Focus color for color scheme
+     * @param {boolean} [darkMode=false] - Dark mode when true
      * @return {colorScheme}
      */
     colorScheme(color = this.color, darkMode = false) {
@@ -435,6 +475,7 @@ export default class ColorMangle {
             focusSat = this.matchLuminance(color, template['--content'], content_isHighLuminance ? 1.5 : 4.5);
             return darkMode ? focusSat : color;
         })();
+
         let compDir = 1;
         let analogous = (() => {
             let deg = 30;
@@ -454,7 +495,6 @@ export default class ColorMangle {
             }
 
             return analogous[0];
-            // return analogous;
         })();
 
         let complementary = this.matchLuminance(this.complementary(focus, 60 * compDir), template['--background'], 3.1);
@@ -462,9 +502,7 @@ export default class ColorMangle {
             '--shadow': 'rgba(0, 0, 0, 0.033)',
             '--shade': 'rgba(0, 0, 0, 0.066)',
             '--transparent': 'rgba(0, 0, 0, 0.22)',
-            '--placeholder': 'rgba(0, 0, 0, 0.33)',
-            '--light': 'rgba(255, 255, 255, 0.33)',
-            '--overlay': 'rgba(0, 0, 0, 0.33)',
+            '--placeholder': 'rgba(0, 0, 0, 0.33)'
         };
 
         let darkModeAnalogous = darkMode ? this.matchLuminance(analogous, template['--background'], 4.5) : analogous;
@@ -473,7 +511,7 @@ export default class ColorMangle {
         for (let k in template) {
             template[k + '-text'] = this.textColor(opacity.text, template[k]);
             template[k + '-focus'] = k.includes('--background') ? darkModeAnalogous : focus;
-            template[k + '-focus-nude'] = k.includes('--background') ? analogousNude : this.matchLuminance(focus, template[k], 4.5);
+            template[k + '-focus-nude'] = k.includes('--background') ? analogousNude : this.matchLuminance(focus, template[k], 1.66);
             template[k + '-focus-text'] = this.textColor(1, k.includes('--background') ? darkModeAnalogous : focus);
         }
 
@@ -530,23 +568,26 @@ export default class ColorMangle {
         );
     }
 
-    _getAlpha(color_arg = this.color) {
-        let extract = this._extractRGBAHSLADigit(color_arg);
-        return extract ? extract[3] || 1 : 1;
-    }
-
-    matchLuminance(color_target, color_arg = this.color, meet, direction, method) {
-        // return color_target;
+    /**
+     * Match luminance
+     * @param {string} target_color - Target color
+     * @param {string} [color_arg=this.color] - Base color
+     * @param {number} [target_ratio] - Target contrast ratio
+     * @param {number} [direction] - Adjust direction. Adjust to darker luminance when -1. Brighter when 1, otherwise auto.
+     * @param {string} [method] - Luminance adjustment mode: 'brightness | luminance | saturation'
+     * @return {string}
+     */
+    matchLuminance(target_color, color_arg = this.color, target_ratio, direction, method) {
         let {color} = this._colorType(color_arg);
-        let target = this._colorType(color_target).color;
+        let target = this._colorType(target_color).color;
 
-        if (meet) {
+        if (target_ratio) {
             let adj = target;
             let m = this.contrastRatio(adj, color);
-            if (m < meet) {
+            if (m < target_ratio) {
                 let dir = direction || this.isHighLuminance(color) ? -1 : 1;
                 let count = 100;
-                while (m < meet && count--) {
+                while (m < target_ratio && count--) {
                     let adj_set;
 
                     switch (method) {
@@ -557,7 +598,7 @@ export default class ColorMangle {
                             adj_set = this.adjustLuminance(1 * dir, adj);
                             break;
                         default:
-                            adj_set = this.adjustSaturation(1 * dir, adj);
+                            adj_set = this.adjustBrightness(1 * dir, {legacy: true, color: adj});
                     }
 
                     if (adj === adj_set)
@@ -586,7 +627,7 @@ export default class ColorMangle {
                 let adj_set;
                 switch (method) {
                     case 'saturation':
-                        adj_set = this.adjustSaturation(currDir, adj);
+                        adj_set = this.adjustBrightness(currDir, {color: adj, legacy: true});
                         break;
                     case 'luminance':
                         adj_set = this.adjustLuminance(currDir, adj);
@@ -604,6 +645,12 @@ export default class ColorMangle {
         }
     }
 
+    /**
+     * Get analogous color
+     * @param {string} [color_arg=this.color] - Target color
+     * @param {number} [deg=30] - Amount of hue separation
+     * @return {Array} - 2 analogous color is returned
+     */
     analogous(color_arg = this.color, deg = 30) {
         let {color} = this._colorType(color_arg);
 
@@ -612,17 +659,23 @@ export default class ColorMangle {
             return val < 0 ? 360 + val : val > 360 ? val - 360 : val;
         };
 
-        let hsl = this.hsla(this._getAlpha(color), color);
+        let hsl = this.hsla(this.getAlpha(color), color);
         let plus = 'hsla(' + spin(hsl.h, deg) + ', ' + hsl.s + '%, ' + hsl.l + '%, ' + hsl.a + ')';
         let minus = 'hsla(' + spin(hsl.h, -deg) + ', ' + hsl.s + '%, ' + hsl.l + '%, ' + hsl.a + ')';
 
         return [this.matchLuminance(plus, color), this.matchLuminance(minus, color)];
     }
 
+    /**
+     * Get complementary color
+     * @param {string} [color_arg=this.color] - Target color
+     * @param {number} [add=0] - Add or subtract hue from complementary color
+     * @return {string}
+     */
     complementary(color_arg = this.color, add = 0) {
         let {color} = this._colorType(color_arg);
 
-        let hsl = this.hsla(this._getAlpha(color), color);
+        let hsl = this.hsla(this.getAlpha(color), color);
 
         if (hsl.h < 180)
             hsl.h += 180;
@@ -632,11 +685,13 @@ export default class ColorMangle {
         hsl.h += add;
         hsl.h = hsl.h > 360 ? hsl.h - 360 : hsl.h < 0 ? 360 - hsl.h : hsl.h;
 
-        return this.hex(this.toString(hsl));
+        return this.hex(this._toString(hsl));
     }
 
     /**
      * Check if the color has high luminance.
+     * @param {string} [color_arg=this.color] - Target color
+     * @param {boolean} [fineTuned=false] - Custom Color space is applied when true
      * @return {boolean}
      */
     isHighLuminance(color_arg = this.color, fineTuned = false) {
@@ -649,7 +704,6 @@ export default class ColorMangle {
 
         // Web standard of color space threshold is 128
         return (yiq >= (fineTuned ? 188 : 128));
-        // return (yiq >= 128);
     }
 
     _luminance(color_arg = this.color) {
@@ -664,37 +718,7 @@ export default class ColorMangle {
         return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
     }
 
-    adjustSaturation(value, color_arg = this.color) {
-        let {type, color} = this._colorType(color_arg);
-        let col = this.hsla(this._getAlpha(color), color);
-
-        let limit = (v, limit = 100) => {
-            return v > limit ? limit : v < 0 ? 0 : v;
-        };
-
-        col.s += ((value > 0 ? (100 - col.s) : col.s) / 100) * value;
-        col.s = limit(col.s);
-        col.l += ((value > 0 ? (100 - col.l) : col.l) / 100) * value;
-        col.l = limit(col.l);
-
-        return this.toString(col);
-    }
-
-    adjustLuminance(value, color_arg = this.color) {
-        let {type, color} = this._colorType(color_arg);
-        let col = this.hsla(this._getAlpha(color), color);
-
-        let limit = (v, limit = 100) => {
-            return v > limit ? limit : v < 0 ? 0 : v;
-        };
-
-        col.l += ((value > 0 ? (100 - col.l) : col.l) / 100) * value;
-        col.l = limit(col.l);
-
-        return this.toString(col);
-    }
-
-    toString(col) {
+    _toString(col) {
         let numberOrNot = (n, def = 100) => {
             return typeof n === 'number' ? n : def;
         };
@@ -712,28 +736,38 @@ export default class ColorMangle {
     /**
      * Returns contrast ratio between the given color.
      * Useful to determine if the given color is suitable for text with the constructed color as a background.
-     * @param {string} color_arg - Color string you want to compare luminance ratio.
+     * @param {string} color_arg1 - Color string you want to compare luminance ratio.
+     * @param {string} [color_arg2=this.color] - Color string you want to compare with color_arg1
      * @return {number}
      */
-    contrastRatio(color_arg, color_arg2) {
-        let lum1 = this._luminance(color_arg2 || this.color) + 0.05;
-        let lum2 = this._luminance(color_arg) + 0.05;
+    contrastRatio(color_arg1, color_arg2 = this.color) {
+        let lum1 = this._luminance(color_arg2) + 0.05;
+        let lum2 = this._luminance(color_arg1) + 0.05;
 
         return lum1 > lum2 ? lum1 / lum2 : lum2 / lum1;
     }
 
     /**
      * Returns suitable text color (Black / White).
-     * @param {number | {}} opacity - Can set returning color values opacity.
+     * @param {(number | Object)} opacity - Can set returning color values opacity.
      * @param {number} opacity.black - Set returning color values opacity when the result color is black.
      * @param {number} opacity.white - Set returning color values opacity when the result color is white.
+     * @param {(string|Object)} [option=this.color] - Background color of text
+     * @param {(string|Object)} [option.color=this.color] - Background color of text
+     * @param {(string|Object)} [option.fineTuned=true] - Follows standard color space calculation when false
      * @return {string | null}
      */
-    textColor(opacity = 1, color_arg = this.color, fineTuned = true) {
-        const {type = this.type, color = this.color} = this._colorType(color_arg);
+    textColor(opacity = 1, option = this.color) {
+
+        if (typeof option === 'string')
+            option = {color: option};
+
+        let {color = this.color, fineTuned = true} = option;
+
+        color = this._colorType(color).color;
 
         // returns null if color opacity is below 0.5
-        if (this._getAlpha(color_arg) < 0.5)
+        if (this.getAlpha(color) < 0.5)
             return "inherit";
 
         let blackOpacity, whiteOpacity;
@@ -769,11 +803,13 @@ export default class ColorMangle {
 
     /**
      * Returns hsla color
-     * @param {number} opacity - Set opacity for returning color value.
-     * @return {object}
+     * @param {number} [opacity] - Set opacity for returning color value.
+     * @param {string} [color_arg=this.color] - Color to convert to hsla string
+     * @return {Object} - {h, s, l, r, g, b, a, string}
      */
-    hsla(opacity = 1, color_arg = this.color) {
+    hsla(opacity, color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
+
         const hsl = (r, g, b) => {
             r /= 255;
             g /= 255;
@@ -817,12 +853,12 @@ export default class ColorMangle {
                 h: h,
                 s: s,
                 l: l,
-                string: this.toString({h, s, l, a: opacity})
+                string: this._toString({h, s, l, a: opacity})
             };
 
         } else {
 
-            const digit = this._extractRGBAHSLADigit(color);
+            const digit = this._extractDigit(color);
             opacity = typeof opacity === 'number' ? opacity : digit[3] || 1;
 
             if (type.includes('hsl')) {
@@ -833,7 +869,7 @@ export default class ColorMangle {
                     h: digit[0],
                     s: digit[1],
                     l: digit[2],
-                    string: this.toString({
+                    string: this._toString({
                         h: digit[0],
                         s: digit[1],
                         l: digit[2],
@@ -858,7 +894,7 @@ export default class ColorMangle {
                     s: s,
                     l: l,
                     a: value.a,
-                    string: this.toString({h, s, l, a: value.a})
+                    string: this._toString({h, s, l, a: value.a})
                 });
 
             }
@@ -867,13 +903,13 @@ export default class ColorMangle {
 
     /**
      * Returns hex color string
+     * @param {string} [color_arg=this.color] - Color to convert to hex string
      * @return {string}
      */
     hex(color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (type.includes('rgb') || type.includes('hsl')) {
-            // const opacity = this._extractRGBAHSLADigit(color)[3] || 1;
             const rgba = this.rgba(1, color);
             return '#' + ((1 << 24) + (rgba.r << 16) + (rgba.g << 8) + rgba.b).toString(16).slice(1);
         }
@@ -883,10 +919,11 @@ export default class ColorMangle {
 
     /**
      * Returns rgba color
-     * @param {number} opacity - Set opacity of returning color
-     * @return {object}
+     * @param {number} [opacity] - Set opacity of returning color
+     * @param {string} [color_arg=this.color] - Color to convert to rgba string
+     * @return {Object} - {r, g, b, a, string}
      */
-    rgba(opacity = 1, color_arg = this.color) {
+    rgba(opacity, color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
 
         if (type === 'hex') {
@@ -910,13 +947,13 @@ export default class ColorMangle {
             return {
                 ...rgbObject,
                 a: opacity_value,
-                string: this.toString({
+                string: this._toString({
                     r: +r, g: +g, b: +b, a: opacity_value
                 })
             };
 
         } else {
-            const digit = this._extractRGBAHSLADigit(color);
+            const digit = this._extractDigit(color);
             const a = typeof opacity === 'number' ? opacity : digit[3] || 1;
 
             if (type.includes('rgb')) {
@@ -929,7 +966,7 @@ export default class ColorMangle {
                 };
 
                 return Object.assign({
-                    string: this.toString(value)
+                    string: this._toString(value)
                 }, value);
 
             } else if (type.includes('hsl')) {
@@ -978,7 +1015,7 @@ export default class ColorMangle {
 
                 return {
                     r, g, b, a,
-                    string: this.toString({r, g, b, a})
+                    string: this._toString({r, g, b, a})
                 };
 
             }
@@ -987,16 +1024,43 @@ export default class ColorMangle {
 
     /**
      * Returns brightness adjusted color string
-     * @param {number} light - Adjust value. Darker when minus.
+     * @param {number} value - Adjust value by percent. range: -100 - 100
+     * @param {(string|Object)} [option=this.color] - Color to adjust || additional option.
+     * @param {(string|Object)} [option.color_arg=this.color] - Color to adjust.
+     * @param {(string|Object)} [option.legacy=false] - Legacy adjust mode. Adjust brightness by saturation and luminance.
      * @return {string}
      */
-    adjustBrightness(light = 0, color_arg = this.color) {
-        const {type = this.type, color = this.color} = this._colorType(color_arg);
+    adjustBrightness(value = 0, option = this.color) {
+        let color_arg, legacy = false;
+        if (typeof option === 'string')
+            color_arg = option || this.color;
+        else {
+            color_arg = option.color || this.color;
+            legacy = option.legacy || false;
+        }
 
-        if (light === 0)
+        if (legacy) {
+            let {color} = this._colorType(color_arg);
+            let col = this.hsla(this.getAlpha(color), color);
+
+            let limit = (v, limit = 100) => {
+                return v > limit ? limit : v < 0 ? 0 : v;
+            };
+
+            col.s += ((value > 0 ? (100 - col.s) : col.s) / 100) * value;
+            col.s = limit(col.s);
+            col.l += ((value > 0 ? (100 - col.l) : col.l) / 100) * value;
+            col.l = limit(col.l);
+
+            return this._toString(col);
+        }
+
+        let {type = this.type, color = this.color} = this._colorType(color_arg);
+
+        if (value === 0)
             return color;
 
-        const opacity = type === 'hex' ? 1 : this._extractRGBAHSLADigit(color)[3] || 1;
+        const opacity = type === 'hex' ? 1 : this._extractDigit(color)[3] || 1;
         const rgb = this.rgba(opacity, color);
 
         let rgbRange = {
@@ -1005,14 +1069,14 @@ export default class ColorMangle {
             b: 0 - rgb['b']
         };
 
-        if (light > 0) {
+        if (value > 0) {
             Object.keys(rgbRange).map(function (key) {
                 rgbRange[key] = 255 - rgb[key];
             });
         }
 
         ['r', 'g', 'b'].map(function (key) {
-            rgb[key] += parseInt(rgbRange[key] / 100 * Math.abs(light));
+            rgb[key] += parseInt(rgbRange[key] / 100 * Math.abs(value));
         });
 
         const result = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
@@ -1025,5 +1089,45 @@ export default class ColorMangle {
 
         else if (type.includes('hsl'))
             return this.hsla(rgb.a, result).string;
+    }
+
+    /**
+     * Returns luminance adjusted color string
+     * @param {number} value - Adjust value by percent. range: -100 - 100
+     * @param {string} [color_arg=this.color] - Color to adjust.
+     * @return {string}
+     */
+    adjustLuminance(value = 0, color_arg = this.color) {
+        let {color} = this._colorType(color_arg);
+        let col = this.hsla(this.getAlpha(color), color);
+
+        let limit = (v, limit = 100) => {
+            return v > limit ? limit : v < 0 ? 0 : v;
+        };
+
+        col.l += ((value > 0 ? (100 - col.l) : col.l) / 100) * value;
+        col.l = limit(col.l);
+
+        return this._toString(col);
+    }
+
+    /**
+     * Returns saturation adjusted color string
+     * @param {number} value - Adjust value by percent. range: -100 - 100
+     * @param {string} [color_arg=this.color] - Color to adjust.
+     * @return {string}
+     */
+    adjustSaturation(value = 0, color_arg = this.color) {
+        let {color} = this._colorType(color_arg);
+        let col = this.hsla(this.getAlpha(color), color);
+
+        let limit = (v, limit = 100) => {
+            return v > limit ? limit : v < 0 ? 0 : v;
+        };
+
+        col.s += ((value > 0 ? (100 - col.s) : col.s) / 100) * value;
+        col.s = limit(col.s);
+
+        return this._toString(col);
     }
 }

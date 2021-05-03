@@ -11,6 +11,10 @@
 <div id="test1"></div>
 <div id="test2"></div>
 <div id="test3" style="color: #018281"></div>
+<div id="adjust1">Adjust Brightness</div>
+<div id="adjust2">Adjust Luminance</div>
+<div id="adjust3">Adjust Saturation</div>
+
 <hr>
 <div class="colorBox" id="textColor">
     Text Color
@@ -32,6 +36,7 @@
         </div>
         <div id="article">
             <p>CONTENT</p>
+            <p id="contentFocus">CONTENT Focus</p>
             <p id="msg">Text Button</p>
             <p id="alert">Alert message</p>
         </div>
@@ -97,6 +102,10 @@
         font-weight: bold;
     }
 
+    #contentFocus {
+        color: var(--content-focus-nude);
+    }
+
     #alert {
         color: var(--alert);
         font-weight: bold;
@@ -157,7 +166,7 @@
     }
 </style>
 <script>
-    let color1 = '#018281';
+    let color1 = '#3bb0b0';
     let cm = new ColorMangle(color1);
 
     let test1 = document.getElementById('test1');
@@ -168,8 +177,16 @@
     test1.style.color = cm.textColor(); // text color
     test1.style.backgroundColor = color1; // background color
 
-    let color2 = cm.rgba();
+    let amount = 30;
+    let a1 = cm.adjustBrightness(amount);
+    let a2 = cm.adjustLuminance(amount);
+    let a3 = cm.adjustSaturation(amount);
 
+    document.getElementById('adjust1').style.backgroundColor = a1;
+    document.getElementById('adjust2').style.backgroundColor = a2;
+    document.getElementById('adjust3').style.backgroundColor = a3;
+
+    let color2 = cm.rgba();
     test2.innerText = color2.string;
     test2.style.color = color2.string;
     test2.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
