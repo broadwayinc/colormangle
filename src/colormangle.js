@@ -1,10 +1,13 @@
 // To test on local browser, remove export default
-export default class ColorMangle {
+
+/**
+ * ColorMangle is a JS library that:
+ * Converts color strings to various format,
+ * Retrieves adequate text color based on contrast ratio,
+ * Generates color schemes for web design, and more.
+ */
+class ColorMangle {
     /**
-     * ColorMangle is a JS library that:
-     * Converts color strings to various format,
-     * Retrieves adequate text color based on contrast ratio,
-     * Generates color schemes for web design, and more.
      * @param {string} [color='#4848db'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
     constructor(color = '#4848db') {
@@ -1130,3 +1133,5 @@ export default class ColorMangle {
         return this._toString(col);
     }
 }
+
+module.exports = ColorMangle;
