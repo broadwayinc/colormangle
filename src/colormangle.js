@@ -1,6 +1,5 @@
 // To test on local browser, remove export default
-//export default
-class ColorMangle {
+export default class ColorMangle {
     /**
      * ColorMangle is a JS library that:
      * Converts color strings to various format,
