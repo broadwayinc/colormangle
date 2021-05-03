@@ -1,5 +1,4 @@
-// To test on local browser, remove export default
-
+// JSDoc does not recognize export default class. should export by traditional es5 way.
 /**
  * ColorMangle is a JS library that:
  * Converts color strings to various format,
@@ -1134,4 +1133,5 @@ class ColorMangle {
     }
 }
 
-module.exports = ColorMangle;
+if (module)
+    module.exports = ColorMangle;
