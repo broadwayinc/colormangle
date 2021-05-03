@@ -1133,5 +1133,4 @@ class ColorMangle {
     }
 }
 
-if (module)
-    module.exports = ColorMangle;
+module.exports = ColorMangle;
