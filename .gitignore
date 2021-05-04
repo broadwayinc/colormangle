@@ -1,8 +1,4 @@
 node_modules/
-node_modules/.bin/acorn.cmd
 dist/
-.idea/colormangle.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
+.idea/
 package-lock.json
