@@ -401,36 +401,6 @@ class ColorMangle {
      * @property {string} --success_shadow
      * @property {string} --success_soft
      * @property {string} --success_transparent
-     * @property {string} --toolbar
-     * @property {string} --toolbar-focus
-     * @property {string} --toolbar-focus-nude
-     * @property {string} --toolbar-focus-nude_placeholder
-     * @property {string} --toolbar-focus-nude_shade
-     * @property {string} --toolbar-focus-nude_shadow
-     * @property {string} --toolbar-focus-nude_soft
-     * @property {string} --toolbar-focus-nude_transparent
-     * @property {string} --toolbar-focus-text
-     * @property {string} --toolbar-focus-text_placeholder
-     * @property {string} --toolbar-focus-text_shade
-     * @property {string} --toolbar-focus-text_shadow
-     * @property {string} --toolbar-focus-text_soft
-     * @property {string} --toolbar-focus-text_transparent
-     * @property {string} --toolbar-focus_placeholder
-     * @property {string} --toolbar-focus_shade
-     * @property {string} --toolbar-focus_shadow
-     * @property {string} --toolbar-focus_soft
-     * @property {string} --toolbar-focus_transparent
-     * @property {string} --toolbar-text
-     * @property {string} --toolbar-text_placeholder
-     * @property {string} --toolbar-text_shade
-     * @property {string} --toolbar-text_shadow
-     * @property {string} --toolbar-text_soft
-     * @property {string} --toolbar-text_transparent
-     * @property {string} --toolbar_placeholder
-     * @property {string} --toolbar_shade
-     * @property {string} --toolbar_shadow
-     * @property {string} --toolbar_soft
-     * @property {string} --toolbar_transparent
      * @property {string} --transparent
      */
     /**
@@ -452,8 +422,7 @@ class ColorMangle {
 
         let template = {
             '--background': darkMode ? '#121212' : '#f7f7f7',
-            '--content': darkMode ? '#2b2b2b' : '#ffffff',
-            '--toolbar': darkMode ? '#2b2b2b' : '#ffffff',
+            '--content': darkMode ? '#2b2b2b' : '#ffffff'
         };
 
         let focusOriginal;
