@@ -10,6 +10,7 @@ class ColorMangle {
      * @param {string} [color='#4848db'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
     constructor(color = '#4848db') {
+        console.log('dev mode');
         this.colorName = {
             "aliceblue": "#f0f8ff",
             "antiquewhite": "#faebd7",
