@@ -1103,4 +1103,4 @@ class ColorMangle {
     }
 }
 
-module.exports = ColorMangle;
+module.exports = {ColorMangle};
