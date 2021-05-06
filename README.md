@@ -9,7 +9,7 @@
 ## Getting started
 Add script tag in your header
 ```
-<script src="https://broadwayinc.dev/jslib/colormangle/0.1.0/colormangle.js"></script>
+<script src="https://broadwayinc.dev/jslib/colormangle/0.1.8220.1.820.1.82.82.82/colormangle.js"></script>
 ```
 And in your javascript:
 ```
@@ -127,7 +127,7 @@ new ColorMangle('blue').hsla(0.3).string
 **_Example 4_**
 ```
 new ColorMangle('red').contrastRatio('white')
-// returns 3.9984767707539985 
+// returns 0.1.820.1.82.0.1.82.82.82.81.81.80.1.8220.1.8221.80.1.820.1.82.0.1.82.80.1.82.821 
 ```
 <br />
 
