@@ -407,7 +407,7 @@ class ColorMangle {
      * Generates color scheme object.
      * @param {string} [color=this.color] - Focus color for color scheme
      * @param {boolean} [darkMode=false] - Dark mode when true
-     * @return {colorScheme} - { [ <CSS Variable names> ] : <string | HTML color string> }
+     * @return {colorScheme} - { [&lt;CSS Variable names&gt;] : &lt;string | HTML color string&gt; }
      */
     colorScheme(color = this.color, darkMode = false) {
 
@@ -619,7 +619,7 @@ class ColorMangle {
      * Generate analogous color
      * @param {string} [color_arg=this.color] - Target color
      * @param {number} [deg=30] - Amount of hue separation
-     * @return {Array} - 2 analogous color is returned. [ <hsla color>, ... ]
+     * @return {Array} - 2 analogous color is returned. [&lt;hsla color&gt;, ... ]
      */
     analogous(color_arg = this.color, deg = 30) {
         let {color} = this._colorType(color_arg);
@@ -774,7 +774,7 @@ class ColorMangle {
      * Returns hsla color
      * @param {number} [opacity] - Set opacity for returning color value.
      * @param {string} [color_arg=this.color] - Color to convert to hsla string
-     * @return {Object} - { h: <number>, s: <number>, l: <number>, r: <number>, g: <number>, b: <number>, a: <number>, string: <string | rgba color string> }
+     * @return {Object} - { h: &lt;number&gt;, s: &lt;number&gt;, l: &lt;number&gt;, r: &lt;number&gt;, g: &lt;number&gt;, b: &lt;number&gt;, a: &lt;number&gt;, string: &lt;string | rgba color string&gt; }
      */
     hsla(opacity, color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
@@ -890,7 +890,7 @@ class ColorMangle {
      * Returns rgba color
      * @param {number} [opacity] - Set opacity of returning color
      * @param {string} [color_arg=this.color] - Color to convert to rgba string
-     * @return {Object} - { r: <number>, g: <number>, b: <number>, a: <number>, string: <string | HTML color string> }
+     * @return {Object} - { r: &lt;number&gt;, g: &lt;number&gt;, b: &lt;number&gt;, a: &lt;number&gt;, string: &lt;string | HTML color string&gt; }
      */
     rgba(opacity, color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
