@@ -238,7 +238,7 @@ class ColorMangle {
 
     /**
      * Retrieves color alpha value
-     * @return {number} Range 0 - 1
+     * @return {number} Range 0 ~ 1
      */
     getAlpha(color_arg = this.color) {
 
@@ -408,7 +408,7 @@ class ColorMangle {
      * Generates color scheme object.
      * @param {string} [color=this.color] - Focus color for color scheme
      * @param {boolean} [darkMode=false] - Dark mode when true
-     * @return {colorScheme}
+     * @return {colorScheme} - { [<CSS Variable names>]: <string | HTML color string> }
      */
     colorScheme(color = this.color, darkMode = false) {
 
@@ -540,13 +540,13 @@ class ColorMangle {
     }
 
     /**
-     * Match luminance
+     * Match luminance of target_color with base color
      * @param {string} target_color - Target color
      * @param {string} [color_arg=this.color] - Base color
-     * @param {number} [target_ratio] - Target contrast ratio
+     * @param {number} [target_ratio] - Set contrast ratio difference
      * @param {number} [direction] - Adjust direction. Adjust to darker luminance when -1. Brighter when 1, otherwise auto.
      * @param {string} [method] - Luminance adjustment mode: 'brightness | luminance | saturation'
-     * @return {string}
+     * @return {string} - HTML color string
      */
     matchLuminance(target_color, color_arg = this.color, target_ratio, direction, method) {
         let {color} = this._colorType(color_arg);
@@ -617,7 +617,7 @@ class ColorMangle {
     }
 
     /**
-     * Get analogous color
+     * Generate analogous color
      * @param {string} [color_arg=this.color] - Target color
      * @param {number} [deg=30] - Amount of hue separation
      * @return {Array} - 2 analogous color is returned
@@ -638,7 +638,7 @@ class ColorMangle {
     }
 
     /**
-     * Get complementary color
+     * Generate complementary color
      * @param {string} [color_arg=this.color] - Target color
      * @param {number} [add=0] - Add or subtract hue from complementary color
      * @return {string}
@@ -709,7 +709,7 @@ class ColorMangle {
      * Useful to determine if the given color is suitable for text with the constructed color as a background.
      * @param {string} color_arg1 - Color string you want to compare luminance ratio.
      * @param {string} [color_arg2=this.color] - Color string you want to compare with color_arg1
-     * @return {number}
+     * @return {number} - Contrast ratio
      */
     contrastRatio(color_arg1, color_arg2 = this.color) {
         let lum1 = this._luminance(color_arg2) + 0.05;
@@ -726,7 +726,7 @@ class ColorMangle {
      * @param {(string|Object)} [option=this.color] - Background color of text
      * @param {(string|Object)} [option.color=this.color] - Background color of text
      * @param {(string|Object)} [option.fineTuned=true] - Follows standard color space calculation when false
-     * @return {string | null}
+     * @return {string | null} - HTML color string
      */
     textColor(opacity = 1, option = this.color) {
 
@@ -776,7 +776,7 @@ class ColorMangle {
      * Returns hsla color
      * @param {number} [opacity] - Set opacity for returning color value.
      * @param {string} [color_arg=this.color] - Color to convert to hsla string
-     * @return {Object} - {h, s, l, r, g, b, a, string}
+     * @return {Object} - { h: <number>> , s: <number>, l: <number>, r: <number>> , g: <number>, b: <number>, a: <number>, string: <string | rgba color string> }
      */
     hsla(opacity, color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
@@ -875,7 +875,7 @@ class ColorMangle {
     /**
      * Returns hex color string
      * @param {string} [color_arg=this.color] - Color to convert to hex string
-     * @return {string}
+     * @return {string} - HEX color string
      */
     hex(color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
@@ -892,7 +892,7 @@ class ColorMangle {
      * Returns rgba color
      * @param {number} [opacity] - Set opacity of returning color
      * @param {string} [color_arg=this.color] - Color to convert to rgba string
-     * @return {Object} - {r, g, b, a, string}
+     * @return {Object} - { r: <number>> , g: <number>, b: <number>, a: <number>, string: <string | HTML color string> }
      */
     rgba(opacity, color_arg = this.color) {
         const {type = this.type, color = this.color} = this._colorType(color_arg);
@@ -995,11 +995,11 @@ class ColorMangle {
 
     /**
      * Returns brightness adjusted color string
-     * @param {number} value - Adjust value by percent. range: -100 - 100
+     * @param {number} value - Adjust value by percent. range: -100 ~ 100
      * @param {(string|Object)} [option=this.color] - Color to adjust || additional option.
      * @param {(string|Object)} [option.color_arg=this.color] - Color to adjust.
      * @param {(string|Object)} [option.legacy=false] - Legacy adjust mode. Adjust brightness by saturation and luminance.
-     * @return {string}
+     * @return {string} - HTML color string
      */
     adjustBrightness(value = 0, option = this.color) {
         let color_arg, legacy = false;
@@ -1064,7 +1064,7 @@ class ColorMangle {
 
     /**
      * Returns luminance adjusted color string
-     * @param {number} value - Adjust value by percent. range: -100 - 100
+     * @param {number} value - Adjust value by percent. range: -100 ~ 100
      * @param {string} [color_arg=this.color] - Color to adjust.
      * @return {string}
      */
@@ -1084,7 +1084,7 @@ class ColorMangle {
 
     /**
      * Returns saturation adjusted color string
-     * @param {number} value - Adjust value by percent. range: -100 - 100
+     * @param {number} value - Adjust value by percent. range: -100 ~ 100
      * @param {string} [color_arg=this.color] - Color to adjust.
      * @return {string}
      */
