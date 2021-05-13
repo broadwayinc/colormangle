@@ -414,7 +414,7 @@ class ColorMangle {
         let opacity = {
             text: {black: 0.88, white: 1},
             soft: {black: 0.66, white: 0.88},
-            placeholder: {black: 0.33, white: 0.44},
+            placeholder: {black: 0.44, white: 0.55},
             transparent: {black: 0.22, white: 0.33},
             shade: {black: 0.066, white: 0.11},
             shadow: {black: 0.033, white: 0.066}
@@ -481,7 +481,7 @@ class ColorMangle {
         for (let k in template) {
             template[k + '-text'] = this.textColor(opacity.text, template[k]);
             template[k + '-focus'] = k.includes('--background') ? darkModeAnalogous : focus;
-            template[k + '-focus-nude'] = k.includes('--background') ? analogousNude : this.matchLuminance(focus, template[k], 1.66);
+            template[k + '-focus-nude'] = k.includes('--background') ? analogousNude : this.matchLuminance(darkMode ? focus : focusSat, template[k], 1.66);
             template[k + '-focus-text'] = this.textColor(1, k.includes('--background') ? darkModeAnalogous : focus);
         }
 
@@ -500,7 +500,7 @@ class ColorMangle {
             '--success': 'seagreen',
             '--success-text': 'white',
             '--button': focus,
-            '--button-nude': darkMode ? this.matchLuminance(focusOriginal, template["--content"], 7) : this.textColor(opacity.text, template['--content']),
+            '--button-nude': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? '"inherit"' : focusSat,
             '--button-text': this.textColor(1, focus),
         });
 
@@ -515,11 +515,11 @@ class ColorMangle {
             }
         }
 
-        template['--button-border'] = (() => {
-            let focus_isHighLuminance = this.isHighLuminance(focus);
-            let border = this.matchLuminance(this.adjustLuminance(-1, template['--button']), template['--button'], 1.15, -1, focus_isHighLuminance ? 'luminance' : 'brightness');
-            return focus_isHighLuminance ? this.rgba(0.5, border).string : border;
-        })();
+        // template['--button-border'] = (() => {
+        //     let focus_isHighLuminance = this.isHighLuminance(focus);
+        //     let border = this.matchLuminance(this.adjustLuminance(-1, template['--button']), template['--button'], 1.15, -1, focus_isHighLuminance ? 'luminance' : 'brightness');
+        //     return focus_isHighLuminance ? this.rgba(0.5, border).string : border;
+        // })();
 
         if (color && typeof color === 'object') {
             for (let key of color)
