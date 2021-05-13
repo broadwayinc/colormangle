@@ -9,7 +9,7 @@
 ## Getting started
 Add script tag in your header
 ```
-<script src="https://broadwayinc.dev/jslib/colormangle/0.1.85/colormangle.js"></script>
+<script src="https://broadwayinc.dev/jslib/colormangle/dev/colormangle.js"></script>
 ```
 And in your javascript:
 ```
