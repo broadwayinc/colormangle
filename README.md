@@ -9,7 +9,7 @@
 ## Getting started
 Add script tag in your header
 ```
-<script src="https://broadwayinc.dev/jslib/colormangle/dev/colormangle.js"></script>
+<script src="https://broadwayinc.dev/jslib/colormangle/0.1.86/colormangle.js"></script>
 ```
 And in your javascript:
 ```
@@ -58,9 +58,9 @@ console.log(hex) // '#0000ff'
 
 <br />
 
-### .rgba()
+### .rgba(<number: opacity. 0~1 range>)
 
-**.rgba()** converts any css color format string to **rgba** format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
+**.rgba()** converts any color format string to **rgba** format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
 <br />**.rgba()** returns object properties (r, g, b, a, string and their values) as in the following structure.
 
 ```
@@ -85,7 +85,7 @@ new ColorMangle('blue').rgba(0.5).string
 
 <br />
 
-### .hsla()
+### .hsla(<number: opacity 0~1 range>)
 
 **.hsla()** converts any css color format string to hsla format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque). **.hsla()** returns object properties (r, g, b, h, s, l, a, string and their values) as in the following structure.
 
@@ -121,7 +121,7 @@ new ColorMangle('blue').hsla(0.3).string
 ```
 <br />
 
-### .contrastRatio()
+### .contrastRatio(<string: html color>)
 **.contrastRatio()** calculates the contrast ratio between the given colors.
 
 **_Example 4_**
@@ -131,7 +131,7 @@ new ColorMangle('red').contrastRatio('white')
 ```
 <br />
 
-### .textColor()
+### .textColor(<number: opacity. 0~1 range>)
 
 **.textColor()** automatically returns the text color string (either 'white' or 'black') that shows the greatest contrast with the background color. **Opacity** of the output text color (either 'black' or 'white') can be set by **input argument**. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
 
