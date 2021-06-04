@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "webpack -- --env mode=production"
+    "build": "webpack --env mode=production"
   },
   "repository": {
     "type": "git",
