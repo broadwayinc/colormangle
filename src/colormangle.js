@@ -530,12 +530,12 @@ class ColorMangle {
             '--success': 'seagreen',
             '--success-text': 'white',
             '--button': focus,
-            '--button-nude': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? "inherit" : focusSat,
+            '--button-nude': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? "\"inherit\"" : focusSat,
             '--button-text': this.textColor(1, focus)
         });
 
         for (let k in template) {
-            if (!template[k] || template[k] === "inherit")
+            if (!template[k] || template[k] === "\"inherit\"")
                 continue;
 
             let highLum = this.isHighLuminance(template[k]);
@@ -767,7 +767,7 @@ class ColorMangle {
 
         // returns null if color opacity is below 0.5
         if (this.getAlpha(color) < 0.5)
-            return "inherit";
+            return "\"inherit\"";
 
         let blackOpacity, whiteOpacity;
 
