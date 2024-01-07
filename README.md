@@ -7,7 +7,7 @@
 Add script tag in your header
 
 ```
-<script src="https://broadwayinc.dev/jslib/colormangle@latest/colormangle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/colormangle@latest/colormangle.js"></script>
 ```
 
 And in your javascript:
@@ -27,7 +27,7 @@ npm i colormangle
 And in your javascript:
 
 ```
-import {ColorMangle} from 'colormangle';
+import ColorMangle from 'colormangle';
 ```
 
 ## Basic usage
