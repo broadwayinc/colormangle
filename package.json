@@ -1,8 +1,8 @@
 {
   "name": "colormangle",
-  "version": "0.1.97",
+  "version": "0.1.98",
   "description": "ColorMangle creates color scheme, converts color strings to various format and calculates appropriate text color based on contrast ratio.",
-  "main": "src/colormangle.js",
+  "main": "colormangle.js",
   "scripts": {
     "test": "node node_modules/basic-node-server/index.js 3300"
   },
