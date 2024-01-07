@@ -1,16 +1,9 @@
-// JSDoc does not recognize export default class. should export by traditional es5 way.
-/**
- * ColorMangle is a JS library that:
- * Converts color strings to various format,
- * Retrieves adequate text color based on contrast ratio,
- * Generates color schemes for web design, and more.
- */
 class ColorMangle {
     /**
      * @param {string} [color='#4848db'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
-    constructor(color = '#4848db') {
-
+    constructor(color = '#4848db', fineTuned = true) {
+        this.fineTuned = fineTuned;
         this.colorName = {
             "aliceblue": "#f0f8ff",
             "antiquewhite": "#faebd7",
@@ -182,10 +175,10 @@ class ColorMangle {
                 throw 'invalid color';
 
             if (color === this.color)
-                return {type: this.type, color: this.color};
+                return { type: this.type, color: this.color };
 
             if (this.colorName[color])
-                return {type: 'hex', color: this.colorName[color]};
+                return { type: 'hex', color: this.colorName[color] };
 
             chkType = color.match(/^(rgba?|rgb?|hsla?|#)/g);
 
@@ -208,7 +201,7 @@ class ColorMangle {
                     // hex, rgb, rgba, hsl, hsla
                     type = chkType[0];
 
-                return {type, color};
+                return { type, color };
 
             }
 
@@ -221,7 +214,7 @@ class ColorMangle {
     }
 
     _extractDigit(color_arg = this.color) {
-        let {type = this.type, color = this.color} = this._colorType(color_arg);
+        let { type = this.type, color = this.color } = this._colorType(color_arg);
 
         if (type === 'hex')
             color = this.rgba(1, color).string;
@@ -441,12 +434,12 @@ class ColorMangle {
     colorScheme(color = this.color, darkMode = false) {
 
         let opacity = {
-            text: {black: 0.88, white: 1},
-            soft: {black: 0.66, white: 0.88},
-            placeholder: {black: 0.44, white: 0.55},
-            transparent: {black: 0.22, white: 0.33},
-            shade: {black: 0.066, white: 0.11},
-            shadow: {black: 0.033, white: 0.066}
+            text: { black: 0.88, white: 1 },
+            soft: { black: 0.66, white: 0.88 },
+            placeholder: { black: 0.44, white: 0.55 },
+            transparent: { black: 0.22, white: 0.33 },
+            shade: { black: 0.066, white: 0.11 },
+            shadow: { black: 0.033, white: 0.066 }
         };
 
         let template = {
@@ -530,7 +523,7 @@ class ColorMangle {
             '--success': 'seagreen',
             '--success-text': 'white',
             '--button': focus,
-            '--button-nude': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? "" : focusSat,
+            '--button-nude': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? "inherit" : focusSat,
             '--button-text': this.textColor(1, focus)
         });
 
@@ -578,7 +571,7 @@ class ColorMangle {
      * @return {string} - HTML color string
      */
     matchLuminance(target_color, color_arg = this.color, target_ratio, direction, method) {
-        let {color} = this._colorType(color_arg);
+        let { color } = this._colorType(color_arg);
         let target = this._colorType(target_color).color;
 
         if (target_ratio) {
@@ -598,7 +591,7 @@ class ColorMangle {
                             adj_set = this.adjustLuminance(1 * dir, adj);
                             break;
                         default:
-                            adj_set = this.adjustBrightness(1 * dir, {legacy: true, color: adj});
+                            adj_set = this.adjustBrightness(1 * dir, { legacy: true, color: adj });
                     }
 
                     if (adj === adj_set)
@@ -627,7 +620,7 @@ class ColorMangle {
                 let adj_set;
                 switch (method) {
                     case 'saturation':
-                        adj_set = this.adjustBrightness(currDir, {color: adj, legacy: true});
+                        adj_set = this.adjustBrightness(currDir, { color: adj, legacy: true });
                         break;
                     case 'luminance':
                         adj_set = this.adjustLuminance(currDir, adj);
@@ -652,7 +645,7 @@ class ColorMangle {
      * @return {Array} - 2 analogous color is returned. [&lt;hsla color&gt;, ... ]
      */
     analogous(color_arg = this.color, deg = 30) {
-        let {color} = this._colorType(color_arg);
+        let { color } = this._colorType(color_arg);
 
         let spin = (h, v) => {
             let val = h + v;
@@ -673,7 +666,7 @@ class ColorMangle {
      * @return {string} - HEX color string
      */
     complementary(color_arg = this.color, add = 0) {
-        let {color} = this._colorType(color_arg);
+        let { color } = this._colorType(color_arg);
 
         let hsl = this.hsla(this.getAlpha(color), color);
 
@@ -693,8 +686,8 @@ class ColorMangle {
      * @param {boolean} [fineTuned=false] - Custom Color space is applied when true
      * @return {boolean} - True if color has high luminance
      */
-    isHighLuminance(color_arg = this.color, fineTuned = false) {
-        const {r, g, b} = this.rgba(1, this._colorType(color_arg).color);
+    isHighLuminance(color_arg = this.color, fineTuned = this.fineTuned) {
+        const { r, g, b } = this.rgba(1, this._colorType(color_arg).color);
 
         let yiq =
             fineTuned ?
@@ -759,9 +752,9 @@ class ColorMangle {
     textColor(opacity = 1, option = this.color) {
 
         if (typeof option === 'string')
-            option = {color: option};
+            option = { color: option };
 
-        let {color = this.color, fineTuned = true} = option;
+        let { color = this.color, fineTuned = true } = option;
 
         color = this._colorType(color).color;
 
@@ -807,7 +800,7 @@ class ColorMangle {
      * @return {Object} - { h: &lt;number&gt;, s: &lt;number&gt;, l: &lt;number&gt;, r: &lt;number&gt;, g: &lt;number&gt;, b: &lt;number&gt;, a: &lt;number&gt;, string: &lt;string | rgba color string&gt; }
      */
     hsla(opacity, color_arg = this.color) {
-        const {type = this.type, color = this.color} = this._colorType(color_arg);
+        const { type = this.type, color = this.color } = this._colorType(color_arg);
 
         const hsl = (r, g, b) => {
             r /= 255;
@@ -838,21 +831,21 @@ class ColorMangle {
             s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
             s = +(s * 100).toFixed(1);
             l = +(l * 100).toFixed(1);
-            return {h, s, l};
+            return { h, s, l };
         };
 
         if (type === 'hex') {
             opacity = typeof opacity === 'number' ? opacity : 1;
             const rgba = this.rgba(opacity, color);
-            const {r, g, b, a} = rgba;
-            const {h, s, l} = hsl(r, g, b);
+            const { r, g, b, a } = rgba;
+            const { h, s, l } = hsl(r, g, b);
 
             return {
                 r, g, b, a,
                 h: h,
                 s: s,
                 l: l,
-                string: this._toString({h, s, l, a: opacity})
+                string: this._toString({ h, s, l, a: opacity })
             };
 
         } else {
@@ -861,7 +854,7 @@ class ColorMangle {
             opacity = typeof opacity === 'number' ? opacity : digit[3] || 1;
 
             if (type.includes('hsl')) {
-                const {r, g, b, a} = this.rgba(opacity, color);
+                const { r, g, b, a } = this.rgba(opacity, color);
 
                 return {
                     r, g, b, a,
@@ -883,7 +876,7 @@ class ColorMangle {
                     b: digit[2],
                     a: opacity
                 };
-                const {h, s, l} = hsl(value.r, value.g, value.b);
+                const { h, s, l } = hsl(value.r, value.g, value.b);
 
                 return Object.assign(value, {
                     r: value.r,
@@ -893,7 +886,7 @@ class ColorMangle {
                     s: s,
                     l: l,
                     a: value.a,
-                    string: this._toString({h, s, l, a: value.a})
+                    string: this._toString({ h, s, l, a: value.a })
                 });
 
             }
@@ -906,7 +899,7 @@ class ColorMangle {
      * @return {string} - HEX color string
      */
     hex(color_arg = this.color) {
-        const {type = this.type, color = this.color} = this._colorType(color_arg);
+        const { type = this.type, color = this.color } = this._colorType(color_arg);
 
         if (type.includes('rgb') || type.includes('hsl')) {
             const rgba = this.rgba(1, color);
@@ -923,11 +916,11 @@ class ColorMangle {
      * @return {Object} - { r: &lt;number&gt;, g: &lt;number&gt;, b: &lt;number&gt;, a: &lt;number&gt;, string: &lt;string | HTML color string&gt; }
      */
     rgba(opacity, color_arg = this.color) {
-        const {type = this.type, color = this.color} = this._colorType(color_arg);
+        const { type = this.type, color = this.color } = this._colorType(color_arg);
 
         if (type === 'hex') {
             const hex = color;
-            let rgbObject = {r: null, g: null, b: null};
+            let rgbObject = { r: null, g: null, b: null };
             let hexValues = hex.match(/[a-fA-F0-9]{2}/g);
 
             if (hex.length === 4) {
@@ -941,7 +934,7 @@ class ColorMangle {
             }
 
             const opacity_value = typeof opacity === 'number' ? opacity : 1;
-            let {r, g, b} = rgbObject;
+            let { r, g, b } = rgbObject;
 
             return {
                 ...rgbObject,
@@ -1014,7 +1007,7 @@ class ColorMangle {
 
                 return {
                     r, g, b, a,
-                    string: this._toString({r, g, b, a})
+                    string: this._toString({ r, g, b, a })
                 };
 
             }
@@ -1038,7 +1031,7 @@ class ColorMangle {
         }
 
         if (legacy) {
-            let {color} = this._colorType(color_arg);
+            let { color } = this._colorType(color_arg);
             let col = this.hsla(this.getAlpha(color), color);
 
             let limit = (v, limit = 100) => {
@@ -1053,7 +1046,7 @@ class ColorMangle {
             return this._toString(col);
         }
 
-        let {type = this.type, color = this.color} = this._colorType(color_arg);
+        let { type = this.type, color = this.color } = this._colorType(color_arg);
 
         if (value === 0)
             return color;
@@ -1095,7 +1088,7 @@ class ColorMangle {
      * @return {string} - Luminance adjusted hsla color string
      */
     adjustLuminance(value = 0, color_arg = this.color) {
-        let {color} = this._colorType(color_arg);
+        let { color } = this._colorType(color_arg);
         let col = this.hsla(this.getAlpha(color), color);
 
         let limit = (v, limit = 100) => {
@@ -1114,7 +1107,7 @@ class ColorMangle {
      * @return {string} - Saturation adjusted hsla color string
      */
     adjustSaturation(value = 0, color_arg = this.color) {
-        let {color} = this._colorType(color_arg);
+        let { color } = this._colorType(color_arg);
         let col = this.hsla(this.getAlpha(color), color);
 
         let limit = (v, limit = 100) => {
@@ -1128,4 +1121,20 @@ class ColorMangle {
     }
 }
 
-module.exports = {ColorMangle};
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.jsonCrawler = factory();
+    }
+}(this, function () {
+    // Your function here
+    return ColorMangle;
+}));

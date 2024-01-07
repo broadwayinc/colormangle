@@ -1,0 +1,119 @@
+body {
+    background-color: var(--background);
+    color: var(--background-text);
+    text-align: center;
+    --black: rgba(0, 0, 0, 0.015);
+    --white: rgba(255, 255, 255, 0.015);
+    background-size: 8px 8px;
+    background-image: linear-gradient(45deg, var(--black) 25%, var(--white) 25%, var(--white)),
+        linear-gradient(-45deg, var(--black) 25%, var(--white) 25%, var(--white)),
+        linear-gradient(45deg, var(--white) 75%, var(--black) 75%),
+        linear-gradient(-45deg, var(--white) 75%, var(--black) 75%);
+
+    min-height: 100vh;
+    position: relative;
+    background-color: #f0f0f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#schemeDemo {
+    text-align: center;
+    height: 500px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--background);
+    color: var(--background-text);
+    margin: auto;
+}
+
+#head {
+    background-color: var(--focus);
+    color: var(--focus-text);
+}
+
+#head h2 {
+    background-color: var(--complementary);
+    color: var(--complementary-text);
+    padding: 1rem;
+}
+
+#colorScheme {
+    text-align: left;
+}
+
+#somethingelse {
+    background-color: var(--analogous_transparent);
+}
+
+#textButton {
+    color: var(--button-nude);
+    font-weight: bold;
+}
+
+#contentFocus {
+    color: var(--content-focus-nude);
+}
+
+#alert {
+    color: var(--alert);
+    font-weight: bold;
+}
+
+#button {
+    color: var(--button-text);
+    background-color: var(--button);
+    padding: 1rem;
+}
+
+#foot {
+    background-color: var(--analogous);
+    color: var(--analogous-text);
+}
+
+#schemeDemo * {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#content {
+    flex-direction: row;
+}
+
+#article {
+    background-color: var(--content);
+    color: var(--content-text);
+}
+
+#menu p:first-child {
+    background-color: var(--background-focus);
+    color: var(--background-focus-text);
+    padding: 1rem;
+}
+
+#menu p:last-child {
+    color: var(--background-focus-nude);
+}
+
+.colorBox {
+    width: 300px;
+    padding: 1em 0;
+    display: inline-block;
+    vertical-align: middle;
+    border: grey solid 1px;
+    text-align: center;
+    margin: 8px;
+}
+
+.colorBox>p {
+    text-align: center;
+    margin: 0;
+    white-space: pre-wrap;
+}

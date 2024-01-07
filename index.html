@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!--<script src="https://broadwayinc.dev/jslib/colormangle/dev/colormangle.js"></script>-->
-    <script src="./src/colormangle.js"></script>
-    <title>colormangle.js</title>
-</head>
 
-<body>
+<meta charset="UTF-8">
+<script src="colormangle.js"></script>
+<link rel="stylesheet" href="style.css">
+<title>colormangle.js</title>
+
 <div id="test1"></div>
 <div id="test2"></div>
 <div id="test3" style="color: #018281"></div>
@@ -16,13 +14,17 @@
 <div id="adjust3">Adjust Saturation</div>
 
 <hr>
-<div class="colorBox" id="textColor">
-    Text Color
-</div>
+
+<div class="colorBox" id="textColor">Text Color</div>
+
 <br>
+
 <input style='margin: 8px;' id='backgroundSelector' type="color" value='#018281'>
+
 <hr>
+
 <p style='margin: 8px;'>Color Scheme</p>
+
 <div id="schemeDemo">
     <div id="head">
         <h2>HEAD</h2>
@@ -37,7 +39,7 @@
         <div id="article">
             <p>CONTENT</p>
             <p id="contentFocus">CONTENT Focus</p>
-            <p id="msg">Text Button</p>
+            <p id="textButton">Text Button</p>
             <p id="alert">Alert message</p>
         </div>
     </div>
@@ -49,122 +51,14 @@
         FOOT
     </div>
 </div>
+
 <input style='margin: 8px;' id='colorSelector' type="color" value='#FFD43B'>
 <input style='margin: 8px;' id='darkmodeSelector' type="checkbox"> Dark Mode
-<div id="colorScheme">
-</div>
+
+<div id="colorScheme"></div>
+
 <div id='varList' style="text-align:left;white-space: break-spaces;"></div>
-</body>
-<style>
-    body {
-        background-color: var(--background);
-        color: var(--background-text);
-        text-align: center;
-        --black: rgba(0, 0, 0, 0.015);
-        --white: rgba(255, 255, 255, 0.015);
-        /*width: 1100px;*/
-        background-size: 8px 8px;
-        background-image: linear-gradient(45deg, var(--black) 25%, var(--white) 25%, var(--white)),
-        linear-gradient(-45deg, var(--black) 25%, var(--white) 25%, var(--white)),
-        linear-gradient(45deg, var(--white) 75%, var(--black) 75%),
-        linear-gradient(-45deg, var(--white) 75%, var(--black) 75%)
-    }
 
-    #schemeDemo {
-        text-align: center;
-        height: 500px;
-        width: 500px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: var(--background);
-        color: var(--background-text);
-        margin: auto;
-    }
-
-    #head {
-        background-color: var(--focus);
-        color: var(--focus-text);
-    }
-
-    #head h2 {
-        background-color: var(--complementary);
-        color: var(--complementary-text);
-        padding: 1rem;
-    }
-
-    #somethingelse {
-        background-color: var(--analogous_transparent);
-    }
-
-    #msg {
-        color: var(--button-nude);
-        font-weight: bold;
-    }
-
-    #contentFocus {
-        color: var(--content-focus-nude);
-    }
-
-    #alert {
-        color: var(--alert);
-        font-weight: bold;
-    }
-
-    #button {
-        color: var(--button-text);
-        background-color: var(--button);
-        padding: 1rem;
-    }
-
-    #foot {
-        background-color: var(--analogous);
-        color: var(--analogous-text);
-    }
-
-    #schemeDemo * {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #content {
-        flex-direction: row;
-    }
-
-    #article {
-        background-color: var(--content);
-        color: var(--content-text);
-    }
-
-    #menu p:first-child {
-        background-color: var(--background-focus);
-        color: var(--background-focus-text);
-        padding: 1rem;
-    }
-
-    #menu p:last-child {
-        color: var(--background-focus-nude);
-    }
-
-    .colorBox {
-        width: 300px;
-        padding: 1em 0;
-        display: inline-block;
-        vertical-align: middle;
-        border: grey solid 1px;
-        text-align: center;
-        margin: 8px;
-    }
-
-    .colorBox > p {
-        text-align: center;
-        margin: 0;
-        white-space: pre-wrap;
-    }
-</style>
 <script>
     let color1 = '#3bb0b0';
     let cm = new ColorMangle(color1);
@@ -208,9 +102,6 @@
         varList.innerHTML = '';
         let pre = '';
         for (let k in cs) {
-            // if (k.includes('text'))
-            //     continue;
-
             varList.innerHTML += `* @property {string} ${k}` + '\n';
 
             let body = document.getElementsByTagName('body')[0];
@@ -220,7 +111,6 @@
             let curr = k.split('-')[2].split('_')[0];
             if (pre && curr !== pre) {
                 let hr = document.createElement('hr');
-                // let br2 = document.createElement('br');
                 colorSchemeElements.append(hr);
             }
             pre = curr;
@@ -231,18 +121,18 @@
 
             let cssVar = document.createElement('p');
             cssVar.innerHTML = `${k}\n${c}`;
-
             let textColor = colorScheme.textColor(1, c);
             cssVar.style.color = textColor;
 
             colorBox.append(cssVar);
-
             colorSchemeElements.append(colorBox);
         }
     };
 
     let currColor = document.getElementById('backgroundSelector').value;
+
     listColor(currentColorScheme);
+
     colorSelector.addEventListener('input', (e) => {
         currColor = e.target.value;
         currentColorScheme = colorScheme.colorScheme(currColor, darkmode);
@@ -265,7 +155,6 @@
     document.getElementById('backgroundSelector').addEventListener('input', (e) => {
         textColor();
     });
-
-
 </script>
+
 </html>

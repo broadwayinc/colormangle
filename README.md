@@ -1,33 +1,34 @@
-<img alt="APM" src="https://img.shields.io/apm/l/vim-mode">
-
-# ColorMangle <br />
-
-[Getting started](#getting-started) | [ColorMangle()](#new-ColorMangle) | [.hex()](#hex) | [.rgba()](#rgba) | [.hsla()](#hsla) | [.contrastRatio()](#contrastRatio) | [.textColor()](#textColor) | [License](#license) </br> 
+# ColorMangle
 
 **ColorMangle** converts color strings to various format and calculates appropriate text color based on contrast ratio. 
-<br />
+
 ## Getting started
+
 Add script tag in your header
+
 ```
-<script src="https://broadwayinc.dev/jslib/colormangle/0.1.95/colormangle.js"></script>
+<script src="https://broadwayinc.dev/jslib/colormangle@latest/colormangle.js"></script>
 ```
+
 And in your javascript:
+
 ```
 let colormangle = new ColorMangle('rgb(0, 0, 255)');
 let hex = colormangle.hex();
 console.log(hex); // '#0000ff'
 ```
-<br />
+
 On node.js or webpack based projects
 
 ```
 npm i colormangle
 ```
+
 And in your javascript:
+
 ```
 import {ColorMangle} from 'colormangle';
 ```
-<br />
 
 ## Basic usage
 
@@ -43,8 +44,6 @@ Colorname strings can be referred in this [link](https://www.w3schools.com/color
 
 **ColorMangle** have four main functions, which are **.hex()**, **.rgba()**, **.hsla()** and **.textcolor()**. The usages are shown below.
 
-<br />
-
 ### .hex()
 
 **.hex()** converts any color format string to **hex** type string. It doesn't require any input argument.
@@ -56,12 +55,11 @@ let hex = new ColorMangle('blue').hex()
 console.log(hex) // '#0000ff' 
 ```
 
-<br />
-
 ### .rgba(<number: opacity. 0~1 range>)
 
 **.rgba()** converts any color format string to **rgba** format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque).
-<br />**.rgba()** returns object properties (r, g, b, a, string and their values) as in the following structure.
+
+**.rgba()** returns object properties (r, g, b, a, string and their values) as in the following structure.
 
 ```
 {
@@ -83,8 +81,6 @@ new ColorMangle('blue').rgba(0.5).string
 // returns 'rgba(0, 0, 255, 0.5)'
 ```
 
-<br />
-
 ### .hsla(<number: opacity 0~1 range>)
 
 **.hsla()** converts any css color format string to hsla format. The input argument 'opacity' is to set the opacity value of the rgba output. Without any argument, the default value is 1 (0 as fully transparent and 1 as fully opaque). **.hsla()** returns object properties (r, g, b, h, s, l, a, string and their values) as in the following structure.
@@ -101,6 +97,7 @@ new ColorMangle('blue').rgba(0.5).string
     string: 'text value in hsla format'
 }
 ```
+
 **_Example 3_**
 
 ```
@@ -119,9 +116,9 @@ returns { r:0,
 new ColorMangle('blue').hsla(0.3).string
 // returns 'hsla(240, 100%, 50%, 0.3)'
 ```
-<br />
 
 ### .contrastRatio(<string: html color>)
+
 **.contrastRatio()** calculates the contrast ratio between the given colors.
 
 **_Example 4_**
@@ -129,7 +126,6 @@ new ColorMangle('blue').hsla(0.3).string
 new ColorMangle('red').contrastRatio('white')
 // returns 3.9984767707539985 
 ```
-<br />
 
 ### .textColor(<number: opacity. 0~1 range>)
 
