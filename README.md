@@ -1,6 +1,7 @@
 # ColorMangle
 
-**ColorMangle** converts color strings to various format and calculates appropriate text color based on contrast ratio. 
+ColorMangle creates color scheme for your website based on the given primary color.
+It also convert color strings to various format and calculates appropriate text color based on contrast ratio. 
 
 ## Getting started
 

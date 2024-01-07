@@ -1,11 +1,16 @@
 {
   "name": "colormangle",
-  "version": "0.1.96",
-  "description": "ColorMangle creates colorscheme, converts color strings to various format and calculates appropriate text color based on contrast ratio.",
+  "version": "0.1.97",
+  "description": "ColorMangle creates color scheme, converts color strings to various format and calculates appropriate text color based on contrast ratio.",
   "main": "src/colormangle.js",
   "scripts": {
     "test": "node node_modules/basic-node-server/index.js 3300"
   },
+  "keywords": [
+    "color",
+    "scheme",
+    "contrast ratio"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/broadwayinc/colormangle.git"
