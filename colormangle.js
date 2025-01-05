@@ -233,7 +233,6 @@ class ColorMangle {
      * @return {number} - Retrieves color alpha value (range 0 ~ 1)
      */
     getAlpha(color_arg = this.color) {
-
         let extract = this._extractDigit(color_arg);
         return extract ? extract[3] || 1 : 1;
     }
