@@ -1,10 +1,21 @@
 {
   "name": "colormangle",
-  "version": "0.1.99",
+  "version": "0.1.100",
   "description": "ColorMangle creates color scheme, converts color strings to various format and calculates appropriate text color based on contrast ratio.",
   "main": "colormangle.js",
+  "browser": "dist/colormangle.js",
+  "exports": {
+    ".": {
+      "require": "./dist/colormangle.cjs",
+      "import": "./colormangle.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "dev": "npx bns 3333"
+    "dev": "npx bns 3333",
+    "build": "npx webpack --config webpack.config.js"
   },
   "keywords": [
     "color",
@@ -21,7 +32,10 @@
     "url": "https://github.com/broadwayinc/colormangle/issues"
   },
   "homepage": "https://github.com/broadwayinc/colormangle#readme",
-  "dependencies": {
-    "basic-node-server": "^1.0.11"
+  "devDependencies": {
+    "basic-node-server": "^1.0.11",
+    "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^4.10.0"
   }
 }

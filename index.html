@@ -2,7 +2,7 @@
 <html lang="en">
 
 <meta charset="UTF-8">
-<script src="https://cdn.jsdelivr.net/npm/colormangle@latest/colormangle.js"></script>
+<script src="dist/colormangle.js"></script>
 <link rel="stylesheet" href="style.css">
 <title>colormangle.js</title>
 
@@ -95,7 +95,26 @@
     let currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
 
     let colorSchemeElements = document.getElementById('colorScheme');
-
+    let throttle = (func, limit) => {
+        let lastFunc;
+        let lastRan;
+        return function () {
+            const context = this;
+            const args = arguments;
+            if (!lastRan) {
+                func.apply(context, args);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function () {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(context, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
+            }
+        };
+    }
     let listColor = (cs) => {
         colorSchemeElements.innerHTML = '';
         let varList = document.getElementById('varList');
@@ -134,40 +153,20 @@
     listColor(currentColorScheme);
 
     colorSelector.addEventListener('input', throttle((e) => {
+        darkmode = document.getElementById('darkmodeSelector').checked;
         requestAnimationFrame(() => {
-            requestAnimationFrame(()=>{
-                darkmode = e.target.checked;
+            requestAnimationFrame(() => {
                 currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
                 listColor(currentColorScheme);
             });
         });
     }, 200));
     let darkmodeSelector = document.getElementById('darkmodeSelector');
-    function throttle(func, limit) {
-        let lastFunc;
-        let lastRan;
-        return function() {
-            const context = this;
-            const args = arguments;
-            if (!lastRan) {
-                func.apply(context, args);
-                lastRan = Date.now();
-            } else {
-                clearTimeout(lastFunc);
-                lastFunc = setTimeout(function() {
-                    if ((Date.now() - lastRan) >= limit) {
-                        func.apply(context, args);
-                        lastRan = Date.now();
-                    }
-                }, limit - (Date.now() - lastRan));
-            }
-        };
-    }
-    
+
     darkmodeSelector.addEventListener('input', throttle((e) => {
+        darkmode = e.target.checked;
         requestAnimationFrame(() => {
-            requestAnimationFrame(()=>{
-                darkmode = e.target.checked;
+            requestAnimationFrame(() => {
                 currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
                 listColor(currentColorScheme);
             });
