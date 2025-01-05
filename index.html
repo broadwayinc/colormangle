@@ -51,10 +51,10 @@
         FOOT
     </div>
 </div>
-
-<input style='margin: 8px;' id='colorSelector' type="color" value='#FFD43B'>
-<input style='margin: 8px;' id='darkmodeSelector' type="checkbox"> Dark Mode
-
+<div>
+    <input style='margin: 8px;' id='colorSelector' type="color" value='#FFD43B'>
+    <input style='margin: 8px;' id='darkmodeSelector' type="checkbox"> Dark Mode
+</div>
 <div id="colorScheme"></div>
 
 <div id='varList' style="text-align:left;white-space: break-spaces;"></div>
@@ -133,18 +133,46 @@
 
     listColor(currentColorScheme);
 
-    colorSelector.addEventListener('input', (e) => {
-        currColor = e.target.value;
-        currentColorScheme = colorScheme.colorScheme(currColor, darkmode);
-        listColor(currentColorScheme);
-    });
+    colorSelector.addEventListener('input', throttle((e) => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(()=>{
+                darkmode = e.target.checked;
+                currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
+                listColor(currentColorScheme);
+            });
+        });
+    }, 200));
     let darkmodeSelector = document.getElementById('darkmodeSelector');
-
-    darkmodeSelector.addEventListener('input', (e) => {
-        darkmode = e.target.checked;
-        currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
-        listColor(currentColorScheme);
-    });
+    function throttle(func, limit) {
+        let lastFunc;
+        let lastRan;
+        return function() {
+            const context = this;
+            const args = arguments;
+            if (!lastRan) {
+                func.apply(context, args);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function() {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(context, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
+            }
+        };
+    }
+    
+    darkmodeSelector.addEventListener('input', throttle((e) => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(()=>{
+                darkmode = e.target.checked;
+                currentColorScheme = colorScheme.colorScheme(colorSelector.value, darkmode);
+                listColor(currentColorScheme);
+            });
+        });
+    }, 200));
 
     let textColor = (e) => {
         let color = e?.target?.value || document.getElementById('backgroundSelector').value;

@@ -1,10 +1,10 @@
 {
   "name": "colormangle",
-  "version": "0.1.98",
+  "version": "0.1.99",
   "description": "ColorMangle creates color scheme, converts color strings to various format and calculates appropriate text color based on contrast ratio.",
   "main": "colormangle.js",
   "scripts": {
-    "test": "node node_modules/basic-node-server/index.js 3300"
+    "dev": "npx bns 3333"
   },
   "keywords": [
     "color",
@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/broadwayinc/colormangle#readme",
   "dependencies": {
-    "basic-node-server": "^1.0.4"
+    "basic-node-server": "^1.0.11"
   }
 }
