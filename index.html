@@ -41,6 +41,7 @@
             <p id="contentFocus">CONTENT Focus</p>
             <p id="textButton">Text Button</p>
             <p id="alert">Alert message</p>
+            <p id="success">Success message</p>
         </div>
     </div>
     <div id="somethingelse">
@@ -53,10 +54,12 @@
 </div>
 <div>
     <input style='margin: 8px;' id='colorSelector' type="color" value='#FFD43B'>
-    <input style='margin: 8px;' id='darkmodeSelector' type="checkbox"> Dark Mode
+    <label>
+        <input style='margin: 8px;' id='darkmodeSelector' type="checkbox"> Dark Mode
+    </label>
 </div>
-<div id="colorScheme"></div>
-
+<div id="colorScheme" style="text-align:left;"></div>
+<hr>
 <div id='varList' style="text-align:left;white-space: break-spaces;"></div>
 
 <script>
@@ -117,11 +120,11 @@
     }
     let listColor = (cs) => {
         colorSchemeElements.innerHTML = '';
-        // let varList = document.getElementById('varList');
-        // varList.innerHTML = '';
+        let varList = document.getElementById('varList');
+        varList.innerHTML = '';
         let pre = '';
         for (let k in cs) {
-            // varList.innerHTML += `* @property {string} ${k}` + '\n';
+            varList.innerHTML += `* @property {string} ${k}` + '\n';
 
             let body = document.getElementsByTagName('body')[0];
 
