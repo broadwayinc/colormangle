@@ -1,6 +1,6 @@
 {
   "name": "colormangle",
-  "version": "0.1.102",
+  "version": "0.1.103",
   "description": "ColorMangle converts color strings to various format and calculates appropriate text color based on contrast ratio, creates color scheme for your website.",
   "main": "colormangle.js",
   "browser": "dist/colormangle.js",
