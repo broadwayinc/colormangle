@@ -1,6 +1,4 @@
 body {
-    background-color: var(--background);
-    color: var(--background-text);
     text-align: center;
     --black: rgba(0, 0, 0, 0.015);
     --white: rgba(255, 255, 255, 0.015);
@@ -50,16 +48,21 @@ body {
 }
 
 #textButton {
-    color: var(--button-nude);
+    color: var(--text-button);
     font-weight: bold;
 }
 
 #contentFocus {
-    color: var(--content-focus-nude);
+    color: var(--content-text_focus);
 }
 
 #alert {
     color: var(--alert);
+    font-weight: bold;
+}
+
+#success {
+    color: var(--success);
     font-weight: bold;
 }
 
@@ -98,7 +101,7 @@ body {
 }
 
 #menu p:last-child {
-    color: var(--background-focus-nude);
+    color: var(--background-text_focus);
 }
 
 .colorBox {

@@ -1,159 +1,11 @@
+import colorNames from './color-names.js';
 class ColorMangle {
     /**
      * @param {string} [color='#4848db'] - Argument string can be either color name string or any type of HTML color codes (hex, rgb, hsl).
      */
     constructor(color = '#4848db', fineTuned = true) {
         this.fineTuned = fineTuned;
-        this.colorName = {
-            "aliceblue": "#f0f8ff",
-            "antiquewhite": "#faebd7",
-            "aqua": "#00ffff",
-            "aquamarine": "#7fffd4",
-            "azure": "#f0ffff",
-            "beige": "#f5f5dc",
-            "bisque": "#ffe4c4",
-            "black": "#000000",
-            "blanchedalmond": "#ffebcd",
-            "blue": "#0000ff",
-            "blueviolet": "#8a2be2",
-            "brown": "#a52a2a",
-            "burlywood": "#deb887",
-            "cadetblue": "#5f9ea0",
-            "chartreuse": "#7fff00",
-            "chocolate": "#d2691e",
-            "coral": "#ff7f50",
-            "cornflowerblue": "#6495ed",
-            "cornsilk": "#fff8dc",
-            "crimson": "#dc143c",
-            "cyan": "#00ffff",
-            "darkblue": "#00008b",
-            "darkcyan": "#008b8b",
-            "darkgoldenrod": "#b8860b",
-            "darkgray": "#a9a9a9",
-            "darkgreen": "#006400",
-            "darkgrey": "#a9a9a9",
-            "darkkhaki": "#bdb76b",
-            "darkmagenta": "#8b008b",
-            "darkolivegreen": "#556b2f",
-            "darkorange": "#ff8c00",
-            "darkorchid": "#9932cc",
-            "darkred": "#8b0000",
-            "darksalmon": "#e9967a",
-            "darkseagreen": "#8fbc8f",
-            "darkslateblue": "#483d8b",
-            "darkslategray": "#2f4f4f",
-            "darkslategrey": "#2f4f4f",
-            "darkturquoise": "#00ced1",
-            "darkviolet": "#9400d3",
-            "deeppink": "#ff1493",
-            "deepskyblue": "#00bfff",
-            "dimgray": "#696969",
-            "dimgrey": "#696969",
-            "dodgerblue": "#1e90ff",
-            "firebrick": "#b22222",
-            "floralwhite": "#fffaf0",
-            "forestgreen": "#228b22",
-            "fuchsia": "#ff00ff",
-            "gainsboro": "#dcdcdc",
-            "ghostwhite": "#f8f8ff",
-            "goldenrod": "#daa520",
-            "gold": "#ffd700",
-            "gray": "#808080",
-            "green": "#008000",
-            "greenyellow": "#adff2f",
-            "grey": "#808080",
-            "honeydew": "#f0fff0",
-            "hotpink": "#ff69b4",
-            "indianred": "#cd5c5c",
-            "indigo": "#4b0082",
-            "ivory": "#fffff0",
-            "khaki": "#f0e68c",
-            "lavenderblush": "#fff0f5",
-            "lavender": "#e6e6fa",
-            "lawngreen": "#7cfc00",
-            "lemonchiffon": "#fffacd",
-            "lightblue": "#add8e6",
-            "lightcoral": "#f08080",
-            "lightcyan": "#e0ffff",
-            "lightgoldenrodyellow": "#fafad2",
-            "lightgray": "#d3d3d3",
-            "lightgreen": "#90ee90",
-            "lightgrey": "#d3d3d3",
-            "lightpink": "#ffb6c1",
-            "lightsalmon": "#ffa07a",
-            "lightseagreen": "#20b2aa",
-            "lightskyblue": "#87cefa",
-            "lightslategray": "#778899",
-            "lightslategrey": "#778899",
-            "lightsteelblue": "#b0c4de",
-            "lightyellow": "#ffffe0",
-            "lime": "#00ff00",
-            "limegreen": "#32cd32",
-            "linen": "#faf0e6",
-            "magenta": "#ff00ff",
-            "maroon": "#800000",
-            "mediumaquamarine": "#66cdaa",
-            "mediumblue": "#0000cd",
-            "mediumorchid": "#ba55d3",
-            "mediumpurple": "#9370db",
-            "mediumseagreen": "#3cb371",
-            "mediumslateblue": "#7b68ee",
-            "mediumspringgreen": "#00fa9a",
-            "mediumturquoise": "#48d1cc",
-            "mediumvioletred": "#c71585",
-            "midnightblue": "#191970",
-            "mintcream": "#f5fffa",
-            "mistyrose": "#ffe4e1",
-            "moccasin": "#ffe4b5",
-            "navajowhite": "#ffdead",
-            "navy": "#000080",
-            "oldlace": "#fdf5e6",
-            "olive": "#808000",
-            "olivedrab": "#6b8e23",
-            "orange": "#ffa500",
-            "orangered": "#ff4500",
-            "orchid": "#da70d6",
-            "palegoldenrod": "#eee8aa",
-            "palegreen": "#98fb98",
-            "paleturquoise": "#afeeee",
-            "palevioletred": "#db7093",
-            "papayawhip": "#ffefd5",
-            "peachpuff": "#ffdab9",
-            "peru": "#cd853f",
-            "pink": "#ffc0cb",
-            "plum": "#dda0dd",
-            "powderblue": "#b0e0e6",
-            "purple": "#800080",
-            "rebeccapurple": "#663399",
-            "red": "#ff0000",
-            "rosybrown": "#bc8f8f",
-            "royalblue": "#4169e1",
-            "saddlebrown": "#8b4513",
-            "salmon": "#fa8072",
-            "sandybrown": "#f4a460",
-            "seagreen": "#2e8b57",
-            "seashell": "#fff5ee",
-            "sienna": "#a0522d",
-            "silver": "#c0c0c0",
-            "skyblue": "#87ceeb",
-            "slateblue": "#6a5acd",
-            "slategray": "#708090",
-            "slategrey": "#708090",
-            "snow": "#fffafa",
-            "springgreen": "#00ff7f",
-            "steelblue": "#4682b4",
-            "tan": "#d2b48c",
-            "teal": "#008080",
-            "thistle": "#d8bfd8",
-            "tomato": "#ff6347",
-            "turquoise": "#40e0d0",
-            "violet": "#ee82ee",
-            "wheat": "#f5deb3",
-            "white": "#ffffff",
-            "whitesmoke": "#f5f5f5",
-            "yellow": "#ffff00",
-            "yellowgreen": "#9acd32"
-        };
+
         let format = this._colorType(color);
         this.type = format.type;
         this.color = format.color;
@@ -177,8 +29,8 @@ class ColorMangle {
             if (color === this.color)
                 return { type: this.type, color: this.color };
 
-            if (this.colorName[color])
-                return { type: 'hex', color: this.colorName[color] };
+            if (colorNames[color])
+                return { type: 'hex', color: colorNames[color] };
 
             chkType = color.match(/^(rgba?|rgb?|hsla?|#)/g);
 
@@ -238,194 +90,34 @@ class ColorMangle {
     }
 
     /**
+     * Generates color scheme object.
      * @typedef {Object} colorScheme
      * @property {string} --alert
      * @property {string} --alert-text
-     * @property {string} --alert-text_placeholder
-     * @property {string} --alert-text_shade
-     * @property {string} --alert-text_shadow
-     * @property {string} --alert-text_soft
-     * @property {string} --alert-text_transparent
-     * @property {string} --alert_placeholder
-     * @property {string} --alert_shade
-     * @property {string} --alert_shadow
-     * @property {string} --alert_soft
-     * @property {string} --alert_transparent
      * @property {string} --analogous
      * @property {string} --analogous-text
-     * @property {string} --analogous-text_placeholder
-     * @property {string} --analogous-text_shade
-     * @property {string} --analogous-text_shadow
-     * @property {string} --analogous-text_soft
-     * @property {string} --analogous-text_transparent
-     * @property {string} --analogous_placeholder
-     * @property {string} --analogous_shade
-     * @property {string} --analogous_shadow
-     * @property {string} --analogous_soft
-     * @property {string} --analogous_transparent
      * @property {string} --background
      * @property {string} --background-focus
-     * @property {string} --background-focus-nude
-     * @property {string} --background-focus-nude_placeholder
-     * @property {string} --background-focus-nude_shade
-     * @property {string} --background-focus-nude_shadow
-     * @property {string} --background-focus-nude_soft
-     * @property {string} --background-focus-nude_transparent
      * @property {string} --background-focus-text
-     * @property {string} --background-focus-text_placeholder
-     * @property {string} --background-focus-text_shade
-     * @property {string} --background-focus-text_shadow
-     * @property {string} --background-focus-text_soft
-     * @property {string} --background-focus-text_transparent
-     * @property {string} --background-focus_placeholder
-     * @property {string} --background-focus_shade
-     * @property {string} --background-focus_shadow
-     * @property {string} --background-focus_soft
-     * @property {string} --background-focus_transparent
      * @property {string} --background-text
-     * @property {string} --background-text_placeholder
-     * @property {string} --background-text_shade
-     * @property {string} --background-text_shadow
-     * @property {string} --background-text_soft
-     * @property {string} --background-text_transparent
-     * @property {string} --background_placeholder
-     * @property {string} --background_shade
-     * @property {string} --background_shadow
-     * @property {string} --background_soft
-     * @property {string} --background_transparent
+     * @property {string} --background-text_focus
      * @property {string} --button
-     * @property {string} --button-nude
-     * @property {string} --button-nude_placeholder
-     * @property {string} --button-nude_shade
-     * @property {string} --button-nude_shadow
-     * @property {string} --button-nude_soft
-     * @property {string} --button-nude_transparent
      * @property {string} --button-text
-     * @property {string} --button-text_placeholder
-     * @property {string} --button-text_shade
-     * @property {string} --button-text_shadow
-     * @property {string} --button-text_soft
-     * @property {string} --button-text_transparent
-     * @property {string} --button_placeholder
-     * @property {string} --button_shade
-     * @property {string} --button_shadow
-     * @property {string} --button_soft
-     * @property {string} --button_transparent
      * @property {string} --complementary
      * @property {string} --complementary-text
-     * @property {string} --complementary-text_placeholder
-     * @property {string} --complementary-text_shade
-     * @property {string} --complementary-text_shadow
-     * @property {string} --complementary-text_soft
-     * @property {string} --complementary-text_transparent
-     * @property {string} --complementary_placeholder
-     * @property {string} --complementary_shade
-     * @property {string} --complementary_shadow
-     * @property {string} --complementary_soft
-     * @property {string} --complementary_transparent
      * @property {string} --content
      * @property {string} --content-focus
-     * @property {string} --content-focus-nude
-     * @property {string} --content-focus-nude_placeholder
-     * @property {string} --content-focus-nude_shade
-     * @property {string} --content-focus-nude_shadow
-     * @property {string} --content-focus-nude_soft
-     * @property {string} --content-focus-nude_transparent
      * @property {string} --content-focus-text
-     * @property {string} --content-focus-text_placeholder
-     * @property {string} --content-focus-text_shade
-     * @property {string} --content-focus-text_shadow
-     * @property {string} --content-focus-text_soft
-     * @property {string} --content-focus-text_transparent
-     * @property {string} --content-focus_placeholder
-     * @property {string} --content-focus_shade
-     * @property {string} --content-focus_shadow
-     * @property {string} --content-focus_soft
-     * @property {string} --content-focus_transparent
      * @property {string} --content-text
-     * @property {string} --content-text_placeholder
-     * @property {string} --content-text_shade
-     * @property {string} --content-text_shadow
-     * @property {string} --content-text_soft
-     * @property {string} --content-text_transparent
-     * @property {string} --content_placeholder
-     * @property {string} --content_shade
-     * @property {string} --content_shadow
-     * @property {string} --content_soft
-     * @property {string} --content_transparent
+     * @property {string} --content-text_focus
      * @property {string} --focus
      * @property {string} --focus-text
-     * @property {string} --focus-text_placeholder
-     * @property {string} --focus-text_shade
-     * @property {string} --focus-text_shadow
-     * @property {string} --focus-text_soft
-     * @property {string} --focus-text_transparent
-     * @property {string} --focus_placeholder
-     * @property {string} --focus_shade
-     * @property {string} --focus_shadow
-     * @property {string} --focus_soft
-     * @property {string} --focus_transparent
      * @property {string} --placeholder
      * @property {string} --saturate
      * @property {string} --saturate-text
-     * @property {string} --saturate-text_placeholder
-     * @property {string} --saturate-text_shade
-     * @property {string} --saturate-text_shadow
-     * @property {string} --saturate-text_soft
-     * @property {string} --saturate-text_transparent
-     * @property {string} --saturate_placeholder
-     * @property {string} --saturate_shade
-     * @property {string} --saturate_shadow
-     * @property {string} --saturate_soft
-     * @property {string} --saturate_transparent
-     * @property {string} --shade
-     * @property {string} --shadow
      * @property {string} --success
      * @property {string} --success-text
-     * @property {string} --success-text_placeholder
-     * @property {string} --success-text_shade
-     * @property {string} --success-text_shadow
-     * @property {string} --success-text_soft
-     * @property {string} --success-text_transparent
-     * @property {string} --success_placeholder
-     * @property {string} --success_shade
-     * @property {string} --success_shadow
-     * @property {string} --success_soft
-     * @property {string} --success_transparent
-     * @property {string} --toolbar
-     * @property {string} --toolbar-focus
-     * @property {string} --toolbar-focus-nude
-     * @property {string} --toolbar-focus-nude_placeholder
-     * @property {string} --toolbar-focus-nude_shade
-     * @property {string} --toolbar-focus-nude_shadow
-     * @property {string} --toolbar-focus-nude_soft
-     * @property {string} --toolbar-focus-nude_transparent
-     * @property {string} --toolbar-focus-text
-     * @property {string} --toolbar-focus-text_placeholder
-     * @property {string} --toolbar-focus-text_shade
-     * @property {string} --toolbar-focus-text_shadow
-     * @property {string} --toolbar-focus-text_soft
-     * @property {string} --toolbar-focus-text_transparent
-     * @property {string} --toolbar-focus_placeholder
-     * @property {string} --toolbar-focus_shade
-     * @property {string} --toolbar-focus_shadow
-     * @property {string} --toolbar-focus_soft
-     * @property {string} --toolbar-focus_transparent
-     * @property {string} --toolbar-text
-     * @property {string} --toolbar-text_placeholder
-     * @property {string} --toolbar-text_shade
-     * @property {string} --toolbar-text_shadow
-     * @property {string} --toolbar-text_soft
-     * @property {string} --toolbar-text_transparent
-     * @property {string} --toolbar_placeholder
-     * @property {string} --toolbar_shade
-     * @property {string} --toolbar_shadow
-     * @property {string} --toolbar_soft
-     * @property {string} --toolbar_transparent
-     * @property {string} --transparent
-     */
-    /**
-     * Generates color scheme object.
+     * @property {string} --text-button
      * @param {string} [color=this.color] - Focus color for color scheme
      * @param {boolean} [darkMode=false] - Dark mode when true
      * @return {colorScheme} - { [&lt;CSS Variable names&gt;] : &lt;string | HTML color string&gt; }
@@ -434,17 +126,17 @@ class ColorMangle {
 
         let opacity = {
             text: { black: 0.88, white: 1 },
-            soft: { black: 0.66, white: 0.88 },
+            // soft: { black: 0.66, white: 0.88 },
             placeholder: { black: 0.44, white: 0.55 },
-            transparent: { black: 0.22, white: 0.33 },
-            shade: { black: 0.066, white: 0.11 },
-            shadow: { black: 0.033, white: 0.066 }
+            // transparent: { black: 0.22, white: 0.33 },
+            // shade: { black: 0.066, white: 0.11 },
+            // shadow: { black: 0.033, white: 0.066 }
         };
 
         let template = {
             '--background': darkMode ? '#121212' : '#f7f7f7',
             '--content': darkMode ? '#2b2b2b' : '#ffffff',
-            '--toolbar': darkMode ? '#2b2b2b' : '#ffffff'
+            // '--toolbar': darkMode ? '#2b2b2b' : '#ffffff'
         };
 
         let focusOriginal;
@@ -491,10 +183,10 @@ class ColorMangle {
 
         let complementary = this.matchLuminance(this.complementary(focus, 60 * compDir), template['--background'], 3.1);
         let fixedValue = {
-            '--shadow': 'rgba(0, 0, 0, 0.033)',
-            '--shade': 'rgba(0, 0, 0, 0.066)',
-            '--transparent': 'rgba(0, 0, 0, 0.22)',
-            '--placeholder': 'rgba(0, 0, 0, 0.33)'
+            // '--shadow': 'rgba(0, 0, 0, 0.033)',
+            // '--shade': 'rgba(0, 0, 0, 0.066)',
+            // '--transparent': 'rgba(0, 0, 0, 0.22)',
+            '--placeholder': darkMode ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.44)' 
         };
 
         let darkModeAnalogous = darkMode ? this.matchLuminance(analogous, template['--background'], 4.5) : analogous;
@@ -503,7 +195,7 @@ class ColorMangle {
         for (let k in template) {
             template[k + '-text'] = this.textColor(opacity.text, template[k]);
             template[k + '-focus'] = k.includes('--background') ? darkModeAnalogous : focus;
-            template[k + '-focus-nude'] = k.includes('--background') ? analogousNude : this.matchLuminance(darkMode ? focus : focusSat, template[k], 1.66);
+            template[k + '-text_focus'] = k.includes('--background') ? analogousNude : this.matchLuminance(darkMode ? focus : focusSat, template[k], 1.66);
             template[k + '-focus-text'] = this.textColor(1, k.includes('--background') ? darkModeAnalogous : focus);
         }
 
@@ -518,24 +210,24 @@ class ColorMangle {
             '--analogous': analogous,
             '--analogous-text': this.textColor(1, analogous),
             '--alert': 'tomato',
-            '--alert-text': 'white',
-            '--success': 'seagreen',
-            '--success-text': 'white',
+            // '--alert-text': 'white',
+            '--success': 'limegreen',
+            // '--success-text': 'black',
             '--button': focus,
-            '--button-nude': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? "inherit" : focusSat,
+            '--text-button': darkMode ? this.matchLuminance(focusSat, template["--content"], 7) : this.contrastRatio(template["--content"], focusSat) < 4.5 ? "inherit" : focusSat,
             '--button-text': this.textColor(1, focus)
         });
 
-        for (let k in template) {
-            if (!template[k] || template[k] === "")
-                continue;
+        // for (let k in template) {
+        //     if (!template[k] || template[k] === "")
+        //         continue;
 
-            let highLum = this.isHighLuminance(template[k]);
-            for (let op of ['soft', 'placeholder', 'transparent', 'shadow', 'shade']) {
+        //     let highLum = this.isHighLuminance(template[k]);
+        //     for (let op of ['soft', 'placeholder', 'transparent', 'shadow', 'shade']) {
 
-                template[k + '_' + op] = this.rgba(opacity[op][highLum ? 'white' : 'black'], template[k]).string;
-            }
-        }
+        //         template[k + '_' + op] = this.rgba(opacity[op][highLum ? 'white' : 'black'], template[k]).string;
+        //     }
+        // }
 
         // template['--button-border'] = (() => {
         //     let focus_isHighLuminance = this.isHighLuminance(focus);
